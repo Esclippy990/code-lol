@@ -21790,7 +21790,7 @@ if (message.startsWith('?god')) {
               player.health = Infinity;
               player.maxhealth = Infinity;
               }
-            if (message.startsWith('?wh ')) {
+            /*if (message.startsWith('?wh ')) {
               // e.g ?wh 1500 1500 editor
             let x = message.substring(4) // I messed up the variables names AHH
             let anotherX = x.split(' ')[0]; // I have to fricking know maths to do this..
@@ -21800,7 +21800,7 @@ if (message.startsWith('?god')) {
             if (anotherX) {
             if (anotherY) {
             if (type) {
-            sancportals[portalID] = {
+            portals[portalID] = {
         x: anotherX,
         y: anotherY,
         width: 90,
@@ -21818,7 +21818,7 @@ if (message.startsWith('?god')) {
             }
             }
             }
-            }
+            }*/
             if (message.startsWith("?dim ")) {
                 //teleport command
                 let dim = message.replace("?dim ", "");

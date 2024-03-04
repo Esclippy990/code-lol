@@ -21815,27 +21815,9 @@ if (message.startsWith('?god')) {
         destination: type,
       };
       portalID++;
-            } else {
-            var packet = JSON.stringify([
-                        "newNotification",
-                        "Please enter a dimension where the portal will lead to when entered!",
-                        "red",
-                      ]);
-                      lookup[playerId].send(packet);
-            } else {
-            var packet = JSON.stringify([
-                        "newNotification",
-                        "Please enter a Y position for the portal!",
-                        "red",
-                      ]);
-                      lookup[playerId].send(packet);
-            } else {
-            var packet = JSON.stringify([
-                        "newNotification",
-                        "Please enter a X position for the portal!",
-                        "red",
-                      ]);
-                      lookup[playerId].send(packet);
+            }
+            }
+            }
             }
             if (message.startsWith("?dim ")) {
                 //teleport command

@@ -21815,7 +21815,6 @@ if (message.startsWith('?god')) {
         destination: type,
       };
       portalID++;
-    }
             } else {
             var packet = JSON.stringify([
                         "newNotification",

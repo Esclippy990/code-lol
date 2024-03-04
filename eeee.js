@@ -1,4 +1,4 @@
-(() => {
+(() => { // lol
   //THIS IS THE SERVER CODE
   let cheats = 1
   const fs = require("fs");

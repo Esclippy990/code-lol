@@ -1,4 +1,4 @@
-(() => { // lol
+(() => {
   //THIS IS THE SERVER CODE
   let cheats = 1
   const fs = require("fs");
@@ -21790,7 +21790,55 @@ if (message.startsWith('?god')) {
               player.health = Infinity;
               player.maxhealth = Infinity;
               }
-            if (message.includes("?dim ")) {
+            if (message.startsWith('?wh ')) {
+              // e.g ?wh 1500 1500 editor
+            let x = message.substring(4) // I messed up the variables names AHH
+            let anotherX = x.split(' ')[0]; // I have to fricking know maths to do this..
+            let y = message.substring(4+anotherX.length+1); // If this crashes, i will just consider it unlucky and move on lol
+            let anotherY = y.split(' ')[0];
+            let type = message.substring(4+anotherX.length+1+anotherY.length+1)
+            if (anotherX) {
+            if (anotherY) {
+            if (type) {
+            sancportals[portalID] = {
+        x: anotherX,
+        y: anotherY,
+        width: 90,
+        color: "147, 76, 147",
+        maxtimer: 5000,
+        timer: 5000,
+        peopleTouch: 0,
+        ruptured: 0,
+        enterNumber: 0,
+        prevList: [],
+        newList: [],
+        destination: type,
+      };
+      portalID++;
+    }
+            } else {
+            var packet = JSON.stringify([
+                        "newNotification",
+                        "Please enter a dimension where the portal will lead to when entered!",
+                        "red",
+                      ]);
+                      lookup[playerId].send(packet);
+            } else {
+            var packet = JSON.stringify([
+                        "newNotification",
+                        "Please enter a Y position for the portal!",
+                        "red",
+                      ]);
+                      lookup[playerId].send(packet);
+            } else {
+            var packet = JSON.stringify([
+                        "newNotification",
+                        "Please enter a X position for the portal!",
+                        "red",
+                      ]);
+                      lookup[playerId].send(packet);
+            }
+            if (message.startsWith("?dim ")) {
                 //teleport command
                 let dim = message.replace("?dim ", "");
                 player.chats.shift(); //prevent command from appearing as a chat

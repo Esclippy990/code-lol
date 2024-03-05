@@ -9444,6 +9444,28 @@
         destination: "4tdm", //override default arena destination
       };
       portalID++;
+    } else if (choosingPortal == 4) {
+      //spawn portal
+      console.log("a portal to Tank Editor spawned!");
+      const portalX = Math.floor(Math.random() * (gameSize - 50)); //-50 so portal won't spawn near to side of arena
+      const portalY = Math.floor(Math.random() * (gameSize - 50));
+      portals[portalID] = {
+        x: portalX,
+        y: portalY,
+        name: "portal",
+        width: 90,
+        color: "52, 152, 219",
+        outline: "black", //does not affect color of portal currently, in client code, it uses rgb value
+        maxtimer: 1000, //starting number of timer, does not change, must be same value as timer when portal spawn
+        timer: 1000, //the higher the number, the longer the portal stays
+        peopleTouch: 0,
+        ruptured: 0,
+        enterNumber: 0,
+        prevList: [],
+        newList: [],
+        destination: "editor", //override default arena destination
+      };
+      portalID++;
     }
     //change angle of white portal
     enterDunePortal.angleDegrees++;
@@ -10358,6 +10380,28 @@
           destination: "4tdm", //override default arena destination
         };
         portalID++;
+      } else if (choosingPortal == 4) {
+        //spawn portal
+        console.log("a portal to Tank Editor spawned!");
+        const portalX = Math.floor(Math.random() * 900) + 7500 - 450; //spawn in center of cavern within maze walls
+        const portalY = Math.floor(Math.random() * 900) + 7500 - 450;
+        portals[portalID] = {
+          x: portalX,
+          y: portalY,
+          name: "portal",
+          width: 90,
+          color: "52, 152, 219",
+          outline: "black", //does not affect color of portal currently, in client code, it uses rgb value
+          maxtimer: 1000, //starting number of timer, does not change, must be same value as timer when portal spawn
+          timer: 1000, //the higher the number, the longer the portal stays
+          peopleTouch: 0,
+          ruptured: 0,
+          enterNumber: 0,
+          prevList: [],
+          newList: [],
+          destination: "editor", //override default arena destination
+        };
+        portalID++;
       }
     }
     for (const id in enterCrPortal) {
@@ -10950,7 +10994,7 @@
         y: portalY,
         name: "portal",
         width: 90,
-        color: "26, 153, 70",
+        color: "52, 152, 219",
         outline: "black", //does not affect color of portal currently, in client code, it uses rgb value
         maxtimer: 5000, //starting number of timer, does not change, must be same value as timer when portal spawn
         timer: 5000, //the higher the number, the longer the portal stays
@@ -11754,7 +11798,7 @@
           y: portalY,
           name: "portal",
           width: 90,
-          color: "26, 153, 70",
+          color: "52, 152, 219",
           outline: "black", //does not affect color of portal currently, in client code, it uses rgb value
           maxtimer: 5000, //starting number of timer, does not change, must be same value as timer when portal spawn
           timer: 5000, //the higher the number, the longer the portal stays

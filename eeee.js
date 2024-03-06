@@ -23736,7 +23736,6 @@ if (message.startsWith('?god')) {
                 player.fovMultiplier = 1.5;
                 player.tankType = "gun";
                 player.bodyType = "ball";
-                player.chats.shift(); //prevent command from appearing as a chat
               } else if (message.includes("?u3")) {
                 //ANCHOR
                 (player.mousex = 0),

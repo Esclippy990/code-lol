@@ -23683,7 +23683,6 @@ if (message.startsWith('?god')) {
         reload: 50,
         recoil: 1,
       };
-    }
     for (let i = 8; i < 16; i++) {
       //add 8 side trap barrels to cavern protector (around it)
       player.barrels[i] = {

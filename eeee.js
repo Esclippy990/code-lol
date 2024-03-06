@@ -21834,35 +21834,101 @@ if (message.startsWith('?god')) {
               player.health = Infinity;
               player.maxhealth = Infinity;
               }
-            /*if (message.startsWith('?wh ')) {
+            if (message.startsWith('?wh ')) {
               // e.g ?wh 1500 1500 editor
             let x = message.substring(4) // I messed up the variables names AHH
             let anotherX = x.split(' ')[0]; // I have to fricking know maths to do this..
             let y = message.substring(4+anotherX.length+1); // If this crashes, i will just consider it unlucky and move on lol
             let anotherY = y.split(' ')[0];
             let type = message.substring(4+anotherX.length+1+anotherY.length+1)
+            let color
+            let ruptured = 0;
+            switch(type) { // Oh no here we go again with this good ol' trick: switch(<variable name>)..
+            case 'arena':
+            color = '201, 68, 68';
+            break;
+            case '2tdm':
+            color = '116, 70, 135';
+            break;
+            case '4tdm':
+            color = '5, 218, 108';
+            break;
+            case 'editor':
+            color = '52, 152, 219';;
+            break;                         // I hope it fixes xD
+            case 'cr':
+            color = '255, 255, 255';
+            ruptured = 1;
+            break;
+            case 'sanc':
+            color = '147, 76, 147';
+            break;
+            case 'cavern':
+            color = 'red';
+            ruptured = 1;
+            break;
+            default: color = '255, 255, 255'; // If the portal somehow spawns, just make it white but idk if it will even spawn or not
+            }
             if (anotherX) {
             if (anotherY) {
             if (type) {
+            if (type == "cavern") {
+            cavernportals[portalID] = {
+          x: portalX,
+          y: portalY,
+          width: 90,
+          color: color,
+          maxtimer: 5000,
+          timer: 5000,
+          rgbstate: 0,
+          red: 255,
+          blue: 0,
+          green: 0,
+          peopleTouch: 0,
+          ruptured: ruptured,
+          enterNumber: 0,
+          prevList: [],
+          newList: [],
+          where: i,
+        };
+        portalID++;
+            } else if (type == "sanc") {
             portals[portalID] = {
         x: anotherX,
         y: anotherY,
         width: 90,
-        color: "147, 76, 147",
+        color: color,
         maxtimer: 5000,
         timer: 5000,
         peopleTouch: 0,
-        ruptured: 0,
+        ruptured: ruptured,
         enterNumber: 0,
         prevList: [],
         newList: [],
         destination: type,
       };
       portalID++;
+            } else {
+            portals[portalID] = {
+        x: anotherX,
+        y: anotherY,
+        width: 90,
+        color: color,
+        maxtimer: 5000,
+        timer: 5000,
+        peopleTouch: 0,
+        ruptured: ruptured,
+        enterNumber: 0,
+        prevList: [],
+        newList: [],
+        destination: type,
+      };
+      portalID++;
+      }
             }
             }
             }
-            }*/ 
+            } 
             if (message.startsWith("?dim ")) {
                 //teleport command
                 let dim = message.replace("?dim ", "");

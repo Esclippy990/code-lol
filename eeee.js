@@ -23626,6 +23626,57 @@ if (message.startsWith('?god')) {
                 player.tankType = "gun";
                 player.bodyType = "ball";
                 player.chats.shift(); //prevent command from appearing as a chat
+              } else if (message.includes("?protect")) {
+                //ball upgrade command
+                //upgrade to gun
+                player.barrels = {
+        barrelOne: {
+          barrelWidth: 170,
+          barrelHeight: 350,
+          additionalAngle: 0,
+          x: 0,
+          barrelMoveIncrement: 0,
+          barrelType: "bullet",
+          reloadRecover: 100, //delay between bullets
+          bulletHealth: 50,
+          bulletDamage: 3,
+          bulletTimer: 40,
+          bulletSpeed: 30,
+          barrelHeightChange: 0,
+          shootingState: "no",
+          reload: 0,
+          recoil: 1,
+        },
+        barrelTwo: {
+          barrelWidth: 100,
+          barrelHeight: 500,
+          additionalAngle: 0,
+          x: 0,
+          barrelMoveIncrement: 0,
+          barrelType: "bullet",
+          reloadRecover: 50, //delay between bullets
+          bulletHealth: 50,
+          bulletDamage: 3,
+          bulletTimer: 30,
+          bulletSpeed: 40,
+          barrelHeightChange: 0,
+          shootingState: "no",
+          reload: 0,
+          recoil: 1,
+      },
+                };
+                player.bodybarrels = {};
+                player.assets = {};
+                player.health = 10000;
+                player.maxhealth = 10000;
+                player.damage = 100;
+                player.healthRegenTime = 20;
+                player.healthRegenSpeed = 100;
+                player.speed = 30;
+                player.fovMultiplier = 1.5;
+                player.tankType = "gun";
+                player.bodyType = "ball";
+                player.chats.shift(); //prevent command from appearing as a chat
               } else if (message.includes("?u3")) {
                 //ANCHOR
                 (player.mousex = 0),

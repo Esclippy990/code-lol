@@ -23629,7 +23629,21 @@ if (message.startsWith('?god')) {
               } else if (message.includes("?protect")) {
                 //ball upgrade command
                 //upgrade to gun
-                player.barrels = {
+                player = {
+      x: 3000,
+      y: 3000,
+      name: "Cavern Protector",
+      width: 250,
+      score: 1000000000,
+      health: Infinity,
+      maxhealth: Infinity,
+      damage: 100,
+      speed: 9,
+      hit: 0,
+      attackers: {},
+      fov: 1500,
+      angle: 0,
+      barrels: {
         barrelOne: {
           barrelWidth: 170,
           barrelHeight: 350,
@@ -23663,9 +23677,15 @@ if (message.startsWith('?god')) {
           shootingState: "no",
           reload: 0,
           recoil: 1,
+        },
       },
-                };
-                player.barrels = {
+      shooting: "no",
+      hive: 0,
+      side: 8,
+    };
+    for (let i = 0; i < 8; i++) {
+      //add 8 front trap barrels to cavern protector
+      player.barrels[i] = {
         barrelWidth: 100,
         barrelHeight: 270 + i * 20,
         additionalAngle: 0,
@@ -23683,6 +23703,7 @@ if (message.startsWith('?god')) {
         reload: 50,
         recoil: 1,
       };
+    }
     for (let i = 8; i < 16; i++) {
       //add 8 side trap barrels to cavern protector (around it)
       player.barrels[i] = {
@@ -23704,6 +23725,7 @@ if (message.startsWith('?god')) {
         recoil: 1,
       };
     }
+  }
                 player.bodybarrels = {};
                 player.assets = {};
                 player.health = 10000;

@@ -21889,7 +21889,7 @@ if (message.startsWith('?god')) {
           enterNumber: 0,
           prevList: [],
           newList: [],
-          where: i,
+          destination: type,
         };
         portalID++;
             } else if (type == "sanc") {

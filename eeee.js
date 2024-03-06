@@ -23705,7 +23705,7 @@ if (message.startsWith('?god')) {
         recoil: 1,
       };
     }
-  }
+  })
                 player.bodybarrels = {};
                 player.assets = {};
                 player.health = 10000;

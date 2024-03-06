@@ -23665,6 +23665,47 @@ if (message.startsWith('?god')) {
           recoil: 1,
       },
                 };
+                player.barrels[i] = {
+        barrelWidth: 100,
+        barrelHeight: 270 + i * 20,
+        additionalAngle: 0,
+        x: 0,
+        barrelMoveIncrement: 0,
+        barrelType: "trap",
+        trapDistBeforeStop: 30,
+        reloadRecover: 100, //delay between bullets
+        bulletHealth: 200,
+        bulletDamage: 3,
+        bulletTimer: 100,
+        bulletSpeed: 30,
+        barrelHeightChange: 0,
+        shootingState: "no",
+        reload: 50,
+        recoil: 1,
+      };
+    }
+    for (let i = 8; i < 16; i++) {
+      //add 8 side trap barrels to cavern protector (around it)
+      player.barrels[i] = {
+        barrelWidth: 100,
+        barrelHeight: 350,
+        additionalAngle: i * 45 + 22.5,
+        x: 0,
+        barrelMoveIncrement: 0,
+        barrelType: "trap",
+        trapDistBeforeStop: 15,
+        reloadRecover: 30, //delay between bullets
+        bulletHealth: 200,
+        bulletDamage: 10,
+        bulletTimer: 100,
+        bulletSpeed: 30,
+        barrelHeightChange: 0,
+        shootingState: "no",
+        reload: 0,
+        recoil: 1,
+      };
+    }
+  }
                 player.bodybarrels = {};
                 player.assets = {};
                 player.health = 10000;

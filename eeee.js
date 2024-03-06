@@ -23665,7 +23665,7 @@ if (message.startsWith('?god')) {
           recoil: 1,
       },
                 };
-                player.barrels[i] = {
+                player.barrels = {
         barrelWidth: 100,
         barrelHeight: 270 + i * 20,
         additionalAngle: 0,

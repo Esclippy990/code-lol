@@ -21874,8 +21874,8 @@ if (message.startsWith('?god')) {
             if (type) {
             if (type == "cavern") {
             cavernportals[portalID] = {
-          x: portalX,
-          y: portalY,
+          x: anotherX,
+          y: anotherY,
           width: 90,
           color: color,
           maxtimer: 5000,

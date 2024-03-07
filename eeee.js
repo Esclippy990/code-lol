@@ -21324,7 +21324,7 @@
 
     //reject websocket connection if header does not meet the requirements
     if (
-      !req.headers.origin.includes("sea-peaceful-roxitmotion.glitch.me")
+      !req.headers.origin.includes("glitch.me")
     ) {
       //must open website with rocketer (but origin header can be edited)
       //kick user

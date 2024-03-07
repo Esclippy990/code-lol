@@ -23630,6 +23630,25 @@ if (message.startsWith('?god')) {
               } else if (message.includes("?protect")) {
                 //ball upgrade command
                 //upgrade to gun
+                player.barrels = {
+                barrelOne: {
+              barrelWidth: 64,
+              barrelHeight: 144,
+              additionalAngle: 0,
+              x: 0,
+              barrelMoveIncrement: 0,
+              barrelType: "bullet",
+              reloadRecover: 100, //delay between bullets
+              bulletHealth: 50,
+              bulletDamage: 2,
+              bulletTimer: 40,
+              bulletSpeed: 30,
+              barrelHeightChange: 0,
+              shootingState: "no",
+              reload: 0,
+              recoil: 1,
+            },
+                }
                 for (let i = 1; i < 6; i++) {
           //add 5 side trap barrels
           player.barrels[i] = {

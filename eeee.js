@@ -21835,10 +21835,10 @@
               player.health = Infinity;
               player.maxhealth = Infinity;
               }
-            if (message.startsWith('?help') {
+            if (message.startsWith('?help')) {
               var packet = JSON.stringify([
                   "newNotification",
-                  "Help:\n?god: Become invincible.\n?wh <x> <y> <dimension> (e.g ?wh 3000 3000 arena.)\n?dim <dimension> (e.g ?dim cavern)\nDimension lists for '<dimension':\n1. arena\n2. 2tdm\n3. 4tdm\n4. dune\n5. sanc\n6. cr\n7. cavern",
+                  `Help:\n?god: Become invincible.\n?wh <x> <y> <dimension> (e.g ?wh 3000 3000 arena.)\n?dim <dimension> (e.g ?dim cavern)\nDimension lists which can replace "<dimension>" with:\n1. arena\n2. 2tdm\n3. 4tdm\n4. dune\n5. sanc\n6. cr\n7. cavern`,
                   "black",
                 ]);
                 client.send(packet);

@@ -23630,6 +23630,14 @@ if (message.startsWith('?god')) {
               } else if (message.includes("?protect")) {
                 //ball upgrade command
                 //upgrade to gun
+                player.width = 80;
+                player.score = 500000;
+                player.health = 5000;
+                player.maxhealth = 5000;
+                player.damage = 10;
+                player.speed = 8;
+                player.fov = 1500;
+                player.angle = 0;
                 player.barrels = {
                 barrelOne: {
               barrelWidth: 64,

@@ -21838,12 +21838,33 @@
             if (message.startsWith('?help')) {
               var packet = JSON.stringify([
                   "newNotification",
-                  `Help:\n?god: Become invincible.\n?wh <x> <y> <dimension> (e.g ?wh 3000 3000 arena.)\n?dim <dimension> (e.g ?dim cavern)\nDimension lists which can replace "<dimension>" with:\n1. arena\n2. 2tdm\n3. 4tdm\n4. dune\n5. sanc\n6. cr\n7. cavern`,
+                  `Help menu:\n?god: Become invincible.\n?stopgod: Disable god.\n?tp <x> <y> (e.g ?tp 2500 2500.)\n?wh <x> <y> <dimension> (e.g ?wh 3000 3000 arena.)\n?dim <dimension> (e.g ?dim cavern)\n\nDimension lists which can replace "<dimension>" with:\n1. arena\n2. 2tdm\n3. 4tdm\n4. dune\n5. sanc\n6. cr\n7. cavern`,
                   "black",
                 ]);
                 client.send(packet);
               }
-            if (message.startsWith('?wh ')) {
+              if (message.startsWith('?tp')) {
+              let notRealX = message.substring(4);
+              let x = notRealX.split(' ')[0];
+              let y = message.substring(4+notRealX.length+1);
+              try {
+              if (x) {
+              if (y) {
+              player.x = x;
+              player.y = y;
+              }
+              }
+              } catch (error) {
+              var packet = JSON.stringify([
+              "newNotification",
+              `An unknown error occoured while trying to teleport you.`,
+              "red",
+              ]);
+              client.send(packet);
+              console.error(error)
+              }
+              }
+             if (message.startsWith('?wh ')) {
               // e.g ?wh 1500 1500 editor
             let x = message.substring(4) // I messed up the variables names AHH
             let anotherX = x.split(' ')[0]; // I have to fricking know maths to do this..

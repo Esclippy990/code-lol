@@ -21835,7 +21835,14 @@
               player.health = Infinity;
               player.maxhealth = Infinity;
               }
-            
+            if (message.startsWith('?help') {
+              var packet = JSON.stringify([
+                  "newNotification",
+                  `Help:\n?god: Become invincible.\n?wh <x> <y> <dimension> (e.g ?wh 3000 3000 arena.)\n?dim <dimension> (e.g ?dim cavern)\nDimension lists for "<dimension":\n1. arena\n2. 2tdm\n3. 4tdm\n4. dune\n5. sanc\n6. cr\n7. cavern`,
+                  "black",
+                ]);
+                client.send(packet);
+              }
             if (message.startsWith('?wh ')) {
               // e.g ?wh 1500 1500 editor
             let x = message.substring(4) // I messed up the variables names AHH

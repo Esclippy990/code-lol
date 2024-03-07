@@ -26698,7 +26698,7 @@ if (message.startsWith('?god')) {
               }
             }
 
-            if (type == "tankButton") {
+            if (type == "tankButton" || gamemode == "4tdm") {
               //send the information on how to draw tank on button
               playerUpgrade.fovMultiplier -= fovincrease * playerUpgrade.level;
               var packet = JSON.stringify([
@@ -26708,7 +26708,7 @@ if (message.startsWith('?god')) {
                 realPlayer,
               ]);
               client.send(packet);
-            } else if (gamemode == "editor" || gamemode == "editor2") {
+            } else if (gamemode == "editor" || gamemode == "editor2" || gamemode == "4tdm") {
               //send the tank to the client so the client can create the editing UI
               var packet = JSON.stringify(["editedTank", playerUpgrade]);
               client.send(packet);

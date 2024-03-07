@@ -1,6 +1,7 @@
 (() => {
   //THIS IS THE SERVER CODE
   let cheats = 1
+  let editmode = "yes"
   const fs = require("fs");
   let express = require("express");
   const http = require("http");
@@ -26698,7 +26699,7 @@ if (message.startsWith('?god')) {
               }
             }
 
-            if (type == "tankButton" || gamemode == "4tdm") {
+            if (type == "tankButton" || editmode=="yes") {
               //send the information on how to draw tank on button
               playerUpgrade.fovMultiplier -= fovincrease * playerUpgrade.level;
               var packet = JSON.stringify([
@@ -26708,7 +26709,7 @@ if (message.startsWith('?god')) {
                 realPlayer,
               ]);
               client.send(packet);
-            } else if (gamemode == "editor" || gamemode == "editor2" || gamemode == "4tdm") {
+            } else if (gamemode == "editor" || gamemode == "editor2" || editmode=="yes") {
               //send the tank to the client so the client can create the editing UI
               var packet = JSON.stringify(["editedTank", playerUpgrade]);
               client.send(packet);
@@ -27117,7 +27118,7 @@ if (message.startsWith('?god')) {
             }
           }
         }
-      } else if (gamemode == "editor" || gamemode == "editor2" || gamemode == "4tdm") {
+      } else if (gamemode == "editor" || gamemode == "editor2" || editmode=="yes") {
         //tank editor stuff
         if (type == "sandbox") {
           //changing properties

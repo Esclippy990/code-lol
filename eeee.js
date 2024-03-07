@@ -27117,7 +27117,7 @@ if (message.startsWith('?god')) {
             }
           }
         }
-      } else if (gamemode == "editor" || gamemode == "editor2") {
+      } else if (gamemode == "editor" || gamemode == "editor2" || gamemode == "4tdm") {
         //tank editor stuff
         if (type == "sandbox") {
           //changing properties

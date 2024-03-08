@@ -27634,7 +27634,7 @@
                   thisplayer.bodybarrels[barID].bulletSpeed = 0;
                   thisplayer.bodybarrels[barID].y = 0;
                   thisplayer.bodybarrels[barID].shootingState = "no";
-                  thisplayer.bodybarrels[barID].reload = 100;
+                  thisplayer.bodybarrels[barID].reload = 0;
                   thisplayer.bodybarrels[barID].barrelMoveIncrement = 0;
                   thisplayer.bodybarrels[barID].barrelMoveIncrementY = 0;
                   thisplayer.bodybarrels[barID].shooting = "yes";

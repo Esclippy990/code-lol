@@ -58,7 +58,7 @@
     var baseSize = 1500; //if change this value, MUST change in client code too
     var defStats = {
       droneLimit: 20,
-      reloadRecover: 10,
+      reloadRecover: 100,
       bulletHealth: 50,
       bulletDamage: 1,
       bulletTimer: 100,

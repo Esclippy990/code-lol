@@ -12138,7 +12138,7 @@
               bulletSpeed: 12, //this is the speed of the bullet, the faster the bullet, the less damage it will do, so fast bullets need to have more damage!
               barrelHeightChange: 0, //barrel height reduction when shooting
               shootingState: "no", //for the barrel animation when shooting
-              reload: 100, //must be zero, this value changes
+              reload: 0, //must be zero, this value changes
               recoil: 1,
             },
           },

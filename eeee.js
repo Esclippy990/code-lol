@@ -58,7 +58,7 @@
     var baseSize = 1500; //if change this value, MUST change in client code too
     var defStats = {
       droneLimit: 20,
-      reloadRecover: 100,
+      reloadRecover: 10,
       bulletHealth: 50,
       bulletDamage: 1,
       bulletTimer: 100,
@@ -186,7 +186,7 @@
     var baseSize = 1500; //if change this value, MUST change in client code too
     var defStats = {
       droneLimit: 20,
-      reloadRecover: 100,
+      reloadRecover: 10,
       bulletHealth: 50,
       bulletDamage: 1,
       bulletTimer: 100,
@@ -22344,7 +22344,7 @@
                         x: thisplayer.width * gadget.offsetX, //add support for gadget.offsetY in the future
                         barrelMoveIncrement: 0,
                         barrelType: barType,
-                        reloadRecover: gadget.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                        reloadRecover: gadget.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                         bulletHealth: 15, //scenexe does not have bullet health
                         bulletDamage: gadget.damage, //weaker than should be i think
                         bulletPenetration: gadget.penetration, //find out conversion later
@@ -22568,7 +22568,7 @@
                       x: thisplayer.width * barrel.offset, //y value in scenexe is barrel.distance
                       barrelMoveIncrement: 0,
                       barrelType: barType,
-                      reloadRecover: barrel.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                      reloadRecover: barrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                       bulletHealth: 15, //scenexe does not have bullet health
                       bulletDamage: barrel.damage, //weaker than should be i think
                       bulletPenetration: barrel.penetration, //find out conversion later
@@ -22651,7 +22651,7 @@
                           x: minionBodyWidth * thisminionbarrel.offset, //y value in scenexe is barrel.distance
                           barrelMoveIncrement: 0,
                           barrelType: "bullet",
-                          reloadRecover: thisminionbarrel.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                          reloadRecover: thisminionbarrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                           bulletHealth: 15, //scenexe does not have bullet health
                           bulletDamage: thisminionbarrel.damage, //weaker than should be i think
                           bulletPenetration: minionBulletPenetration, //find out conversion later
@@ -23142,7 +23142,7 @@
                         x: thisplayer.width * gadget.offsetX, //add support for gadget.offsetY in the future
                         barrelMoveIncrement: 0,
                         barrelType: barType,
-                        reloadRecover: gadget.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                        reloadRecover: gadget.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                         bulletHealth: 15, //scenexe does not have bullet health
                         bulletDamage: gadget.damage, //weaker than should be i think
                         bulletPenetration: gadget.penetration, //find out conversion later
@@ -23366,7 +23366,7 @@
                       x: thisplayer.width * barrel.offset, //y value in scenexe is barrel.distance
                       barrelMoveIncrement: 0,
                       barrelType: barType,
-                      reloadRecover: barrel.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                      reloadRecover: barrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                       bulletHealth: 15, //scenexe does not have bullet health
                       bulletDamage: barrel.damage, //weaker than should be i think
                       bulletPenetration: barrel.penetration, //find out conversion later
@@ -23449,7 +23449,7 @@
                           x: minionBodyWidth * thisminionbarrel.offset, //y value in scenexe is barrel.distance
                           barrelMoveIncrement: 0,
                           barrelType: "bullet",
-                          reloadRecover: thisminionbarrel.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                          reloadRecover: thisminionbarrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                           bulletHealth: 15, //scenexe does not have bullet health
                           bulletDamage: thisminionbarrel.damage, //weaker than should be i think
                           bulletPenetration: minionBulletPenetration, //find out conversion later
@@ -27634,7 +27634,7 @@
                   thisplayer.bodybarrels[barID].bulletSpeed = 0;
                   thisplayer.bodybarrels[barID].y = 0;
                   thisplayer.bodybarrels[barID].shootingState = "no";
-                  thisplayer.bodybarrels[barID].reload = 0;
+                  thisplayer.bodybarrels[barID].reload = 100;
                   thisplayer.bodybarrels[barID].barrelMoveIncrement = 0;
                   thisplayer.bodybarrels[barID].barrelMoveIncrementY = 0;
                   thisplayer.bodybarrels[barID].shooting = "yes";
@@ -28005,7 +28005,7 @@
                         x: thisplayer.width * gadget.offsetX, //add support for gadget.offsetY in the future
                         barrelMoveIncrement: 0,
                         barrelType: barType,
-                        reloadRecover: gadget.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                        reloadRecover: gadget.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                         bulletHealth: 15, //scenexe does not have bullet health
                         bulletDamage: gadget.damage, //weaker than should be i think
                         bulletPenetration: gadget.penetration, //find out conversion later
@@ -28229,7 +28229,7 @@
                       x: thisplayer.width * barrel.offset, //y value in scenexe is barrel.distance
                       barrelMoveIncrement: 0,
                       barrelType: barType,
-                      reloadRecover: barrel.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                      reloadRecover: barrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                       bulletHealth: 15, //scenexe does not have bullet health
                       bulletDamage: barrel.damage, //weaker than should be i think
                       bulletPenetration: barrel.penetration, //find out conversion later
@@ -28312,7 +28312,7 @@
                           x: minionBodyWidth * thisminionbarrel.offset, //y value in scenexe is barrel.distance
                           barrelMoveIncrement: 0,
                           barrelType: "bullet",
-                          reloadRecover: thisminionbarrel.reload, //rough approximation of conversion from scenexe reload to rocketer reload
+                          reloadRecover: thisminionbarrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
                           bulletHealth: 15, //scenexe does not have bullet health
                           bulletDamage: thisminionbarrel.damage, //weaker than should be i think
                           bulletPenetration: minionBulletPenetration, //find out conversion later

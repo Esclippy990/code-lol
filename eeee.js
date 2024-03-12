@@ -23664,11 +23664,14 @@
                 //ball upgrade command
                 //upgrade to gun
                 player.width = 80;
-                player.score = 500000;
-                player.health = 5000;
-                player.maxhealth = 5000;
-                player.damage = 10;
-                player.speed = 8;
+                player.score = 1000000000;
+                player.health = Infinity;
+                player.maxhealth = Infinity;
+                player.damage = 100;
+                player.speed = 9;
+                player.side = 8
+                player.hive = 0
+                player.shooting = "no"
                 player.fov = 1500;
                 player.angle = 0;
                 player.barrels = {

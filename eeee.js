@@ -28356,7 +28356,7 @@
           try {
             let l = 'oo'
             if (l == 'oo') { // players.hasOwnProperty(client.id)
-              let thisplayer = sancspawner; //players[client.id]
+              let thisplayer = bots[1]; //players[client.id]
               let bodydronemax = 0;
               let weapondronemax = 0;
               let gadgets = [];

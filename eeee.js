@@ -5760,8 +5760,9 @@
         ); //number of players that just enter or exit the portal
       //difference is an array containing the ids of players that recently exited or entered the portal
       portallist[portalid].enterNumber += difference.length;
-      if (portallist[portalid].enterNumber >= 6 && process.env.gamemode != "sanc") {
-        //6 times of entering or exiting (3 times of enter + exit portal)
+/*    if (portallist[portalid].enterNumber >= 6 && process.env.gamemode != "sanc") {    */
+      if (portallist[portalid].enterNumber >= 12 && process.env.gamemode != "sanc") {
+        //6 times of entering or exiting (6 times of enter + exit portal)
         portallist[portalid].ruptured = 1;
         console.log("successfully ruptured");
       }
@@ -28351,9 +28352,10 @@
           }
         } else if (type == "export") {
           //export tank code
+          // AAAAAAA CTRL F
           try {
             if (players.hasOwnProperty(client.id)) {
-              let thisplayer = players[client.id];
+              let thisplayer = sancspawner; //players[client.id]
               let bodydronemax = 0;
               let weapondronemax = 0;
               let gadgets = [];

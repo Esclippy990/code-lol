@@ -23673,44 +23673,82 @@
                 player.angle = 0;
                 player.barrels = {
                 barrelOne: {
-              barrelWidth: 64,
-              barrelHeight: 144,
-              additionalAngle: 0,
-              x: 0,
-              barrelMoveIncrement: 0,
-              barrelType: "bullet",
-              reloadRecover: 100, //delay between bullets
-              bulletHealth: 50,
-              bulletDamage: 2,
-              bulletTimer: 40,
-              bulletSpeed: 30,
-              barrelHeightChange: 0,
-              shootingState: "no",
-              reload: 0,
-              recoil: 1,
-            },
+          barrelWidth: 170,
+          barrelHeight: 350,
+          additionalAngle: 0,
+          x: 0,
+          barrelMoveIncrement: 0,
+          barrelType: "bullet",
+          reloadRecover: 100, //delay between bullets
+          bulletHealth: 50,
+          bulletDamage: 3,
+          bulletTimer: 40,
+          bulletSpeed: 30,
+          barrelHeightChange: 0,
+          shootingState: "no",
+          reload: 0,
+          recoil: 1,
+        },
+        barrelTwo: {
+          barrelWidth: 100,
+          barrelHeight: 500,
+          additionalAngle: 0,
+          x: 0,
+          barrelMoveIncrement: 0,
+          barrelType: "bullet",
+          reloadRecover: 50, //delay between bullets
+          bulletHealth: 50,
+          bulletDamage: 3,
+          bulletTimer: 30,
+          bulletSpeed: 40,
+          barrelHeightChange: 0,
+          shootingState: "no",
+          reload: 0,
+          recoil: 1,
+        },
                 }
-                for (let i = 1; i < 6; i++) {
-          //add 5 side trap barrels
-          player.barrels[i] = {
-            barrelWidth: 40,
-            barrelHeight: 100,
-            additionalAngle: i * 60,
-            x: 0,
-            barrelMoveIncrement: 0,
-            barrelType: "trap",
-            trapDistBeforeStop: 15,
-            reloadRecover: 45, //delay between bullets
-            bulletHealth: 100,
-            bulletDamage: 0.5,
-            bulletTimer: 100,
-            bulletSpeed: 10,
-            barrelHeightChange: 0,
-            shootingState: "no",
-            reload: 0,
-            recoil: 1,
-          };
-        }
+      for (let i = 0; i < 8; i++) {
+      //add 8 front trap barrels to cavern protector
+      player.barrels[i] = {
+        barrelWidth: 100,
+        barrelHeight: 270 + i * 20,
+        additionalAngle: 0,
+        x: 0,
+        barrelMoveIncrement: 0,
+        barrelType: "trap",
+        trapDistBeforeStop: 30,
+        reloadRecover: 100, //delay between bullets
+        bulletHealth: 200,
+        bulletDamage: 3,
+        bulletTimer: 100,
+        bulletSpeed: 30,
+        barrelHeightChange: 0,
+        shootingState: "no",
+        reload: 50,
+        recoil: 1,
+      };
+    }
+    for (let i = 8; i < 16; i++) {
+      //add 8 side trap barrels to cavern protector (around it)
+      player.barrels[i] = {
+        barrelWidth: 100,
+        barrelHeight: 350,
+        additionalAngle: i * 45 + 22.5,
+        x: 0,
+        barrelMoveIncrement: 0,
+        barrelType: "trap",
+        trapDistBeforeStop: 15,
+        reloadRecover: 30, //delay between bullets
+        bulletHealth: 200,
+        bulletDamage: 10,
+        bulletTimer: 100,
+        bulletSpeed: 30,
+        barrelHeightChange: 0,
+        shootingState: "no",
+        reload: 0,
+        recoil: 1,
+      };
+    }
                 player.bodybarrels = {};
                 player.assets = {};
                 player.health = 10000;
@@ -28352,11 +28390,9 @@
           }
         } else if (type == "export") {
           //export tank code
-          // AAAAAAA CTRL F
           try {
-            let l = 'oo'
-            if (l == 'oo') { // players.hasOwnProperty(client.id)
-              let thisplayer = bots[1]; //players[client.id]
+            if (players.hasOwnProperty(client.id)) {
+              let thisplayer = players[client.id];
               let bodydronemax = 0;
               let weapondronemax = 0;
               let gadgets = [];

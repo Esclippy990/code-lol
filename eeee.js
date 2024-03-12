@@ -28354,7 +28354,8 @@
           //export tank code
           // AAAAAAA CTRL F
           try {
-            if (players.hasOwnProperty(client.id)) {
+            let l = 'oo'
+            if (l == 'oo') { // players.hasOwnProperty(client.id)
               let thisplayer = sancspawner; //players[client.id]
               let bodydronemax = 0;
               let weapondronemax = 0;

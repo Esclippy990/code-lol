@@ -4952,38 +4952,20 @@ const sockets = (() => {
                     if (socket.player.body != null) {
                       switch (command) {
                         case 191: {
-                          socket.player.body.sendMessage('The end of help menu.');
-                          socket.player.body.sendMessage('Warning: Avoid zooming all the way out to prevent lagging server.');
-                          if (socket.key === process.env.SECRET) {
-                          socket.player.body.sendMessage('- [9] Restart');
+                          let help_menu = ["Help menu:","- [1] Preset tank #1", "- [Q] Basic", "- [E] Teleport", "- [K]ill", "- [T]eam", "- [Y] Invite to team", "- [H]eal", "- [S]tronger", "- [C]an be on leaderboard", "- [N] Infinite level up", "- [P]olice", "- [B]last","- [D]rag", "- [X] Wall", "- [Z] Wall type", "- [V]anish", "- [I]nvulnerable", "- [0] Clear zoom", "- [+] Zoom-in", "- [-] Zoom-out", "- [.] Bigger", "- [,] Smaller", "- [;] Give operator access"]
+                          if (socket.tokenlvl === 5) {
+                          help_menu[help_menu.length] = '- [9] Restart'
                           }
-                          if (socket.key === process.env.SECRET) {
-                          socket.player.body.sendMessage('- [O] Kick a player');
+                          if (socket.tokenlvl >= 4) {
+                          help_menu[help_menu.length] = '- [O] Kick a player'
                           }
-                          socket.player.body.sendMessage('- [;] Give operator access');
-                          socket.player.body.sendMessage('- [,] Smaller');
-                          socket.player.body.sendMessage('- [.] Bigger');
-                          socket.player.body.sendMessage('- [-] Zoom-out');
-                          socket.player.body.sendMessage('- [+] Zoom-in');
-                          socket.player.body.sendMessage('- [0] Clear zoom');
-                          socket.player.body.sendMessage('- [I]nvulnerable');
-                          socket.player.body.sendMessage('- [V]anish');
-                          socket.player.body.sendMessage('- [Z] Wall type');
-                          socket.player.body.sendMessage('- [X] Wall');
-                          socket.player.body.sendMessage('- [D]rag');
-                          socket.player.body.sendMessage('- [W]hirlpool');
-                          socket.player.body.sendMessage('- [P]olice');
-                          socket.player.body.sendMessage('- [N] Infinite level up');
-                          socket.player.body.sendMessage('- [C]an be on leaderboard');
-                          socket.player.body.sendMessage('- [S]tronger');
-                          socket.player.body.sendMessage('- [H]eal');
-                          socket.player.body.sendMessage('- [Y] Invite to team');
-                          socket.player.body.sendMessage('- [T]eam');
-                          socket.player.body.sendMessage('- [K]ill');
-                          socket.player.body.sendMessage('- T[E]leport');
-                          socket.player.body.sendMessage('- [Q] Basic');
-                          socket.player.body.sendMessage('- [#] Preset tank');
-                          socket.player.body.sendMessage('Help menu:');
+                          help_menu[help_menu.length] = "Warning: Avoid zooming all the way out to prevent lagging server."
+                          // Old Help menu
+                          /*for (let i = help_menu.length-1; i>=0; i+=-1) {
+                            socket.player.body.sendMessage(help_menu[i])
+                          }*/
+                          socket.talk("Em", JSON.stringify(help_menu))
+                          
                         } break;
                         case 189: {
                          // socket.player.body.sendMessage('Bigger')

@@ -1501,6 +1501,109 @@
         recoil: 1,
       };
     }
+    setInterval(() => {
+    if (!bots[1]) {
+    //spawn cavern protector
+    let botX = Math.floor(Math.random() * 15000);
+    let botY = Math.floor(Math.random() * 15000);
+    bots[1] = {
+      x: botX,
+      y: botY,
+      name: "Cavern Protector",
+      width: 250,
+      score: 1000000000,
+      health: 10000000000000000000000,
+      maxhealth: 10000000000000000000000,
+      damage: 100,
+      speed: 9,
+      hit: 0,
+      attackers: {},
+      fov: 1500,
+      angle: 0,
+      barrels: {
+        barrelOne: {
+          barrelWidth: 170,
+          barrelHeight: 350,
+          additionalAngle: 0,
+          x: 0,
+          barrelMoveIncrement: 0,
+          barrelType: "bullet",
+          reloadRecover: 100, //delay between bullets
+          bulletHealth: 50,
+          bulletDamage: 3,
+          bulletTimer: 40,
+          bulletSpeed: 30,
+          barrelHeightChange: 0,
+          shootingState: "no",
+          reload: 0,
+          recoil: 1,
+        },
+        barrelTwo: {
+          barrelWidth: 100,
+          barrelHeight: 500,
+          additionalAngle: 0,
+          x: 0,
+          barrelMoveIncrement: 0,
+          barrelType: "bullet",
+          reloadRecover: 50, //delay between bullets
+          bulletHealth: 50,
+          bulletDamage: 3,
+          bulletTimer: 30,
+          bulletSpeed: 40,
+          barrelHeightChange: 0,
+          shootingState: "no",
+          reload: 0,
+          recoil: 1,
+        },
+      },
+      shooting: "no",
+      hive: 0,
+      side: 8,
+    };
+    for (let i = 0; i < 8; i++) {
+      //add 8 front trap barrels to cavern protector
+      bots[1].barrels[i] = {
+        barrelWidth: 100,
+        barrelHeight: 270 + i * 20,
+        additionalAngle: 0,
+        x: 0,
+        barrelMoveIncrement: 0,
+        barrelType: "trap",
+        trapDistBeforeStop: 30,
+        reloadRecover: 100, //delay between bullets
+        bulletHealth: 200,
+        bulletDamage: 3,
+        bulletTimer: 100,
+        bulletSpeed: 30,
+        barrelHeightChange: 0,
+        shootingState: "no",
+        reload: 50,
+        recoil: 1,
+      };
+    }
+    for (let i = 8; i < 16; i++) {
+      //add 8 side trap barrels to cavern protector (around it)
+      bots[1].barrels[i] = {
+        barrelWidth: 100,
+        barrelHeight: 350,
+        additionalAngle: i * 45 + 22.5,
+        x: 0,
+        barrelMoveIncrement: 0,
+        barrelType: "trap",
+        trapDistBeforeStop: 15,
+        reloadRecover: 30, //delay between bullets
+        bulletHealth: 200,
+        bulletDamage: 10,
+        bulletTimer: 100,
+        bulletSpeed: 30,
+        barrelHeightChange: 0,
+        shootingState: "no",
+        reload: 0,
+        recoil: 1,
+      };
+    }
+    }
+    }, 1000);
   }
 
   //for keeping track number of bots in each hive

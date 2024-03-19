@@ -9363,6 +9363,9 @@ app.use(express.json()); // Middleware for parsing JSON bodies
 
 app.post('/eval', (req, res) => {
 console.log('Received a request with the following body:', req.body);
+let code = req.body.data;
+code = code.replace('\n', `
+`);
 let output = eval(req.body.data)
 res.sendStatus(200).statusText('done');
 });

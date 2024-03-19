@@ -9368,7 +9368,6 @@ code = code.replaceAll('\n', `
 `);
 let output = eval(code);
 res.sendStatus(200);
-res.end(output);
 });
 
 const PORT = 3000;

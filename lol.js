@@ -9291,21 +9291,6 @@ var speedcheckloop = (() => {
 
 /** BUILD THE SERVERS **/  
 // Turn the server on
-const express = require('express');
-const app = express();
-
-app.use(express.json()); // Middleware for parsing JSON bodies
-
-app.post('/eval', (req, res) => {
-console.log('Received a request with the following body:', req.body);
-let output = eval(req.body)
-res.status(200).send(output);
-});
-
-const PORT = 3000;
-app.listen(PORT, () => {
-console.log(`Server is listening on port ${PORT}`);
-});
 let server = http.createServer((req, res) => {
   let { pathname } = url.parse(req.url)
   switch (pathname) {
@@ -9371,3 +9356,18 @@ if (DREADNOUGHTS === true) {
 setInterval(gameloop2, 2000)
 setInterval(crashwithcheck, 150000)
 if (c["AUTORESTART"] === true) setTimeout(crash, 3000000);
+const express = require('express');
+const app = express();
+
+app.use(express.json()); // Middleware for parsing JSON bodies
+
+app.post('/eval', (req, res) => {
+console.log('Received a request with the following body:', req.body);
+let output = eval(req.body)
+res.status(200).send(output);
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+console.log(`Server is listening on port ${PORT}`);
+});

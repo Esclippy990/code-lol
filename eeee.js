@@ -21877,9 +21877,10 @@
             message = message.replace(/[^\x00-\x7F]/g, ""); //remove non ascii characters
             if (message.length > 750) {
               //maximum chat length of 750
+              message = message.substring(0, 750); //get first 750 characters
               var packet = JSON.stringify([
                 "newNotification",
-                "Your message exceeds the 750 character limit!",
+                "Your message exceeds the 750 character limit.",
                 "dimgrey",
               ]);
               client.send(packet);

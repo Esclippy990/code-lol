@@ -11887,35 +11887,6 @@
           where: i,
         };
         portalID++;
-      } else if (choosingPortal <= 8) {
-        //spawn portal
-        console.log("a portal to tank editor spawned!");
-        for (var i = 0; i < portalLocations.length; i++) {
-          if (portalLocations[i].portalHere == "no") {
-            var portalX = portalLocations[i].x;
-            var portalY = portalLocations[i].y;
-            portalLocations[i].portalHere = "yes";
-            break;
-          }
-        }
-        portals[portalID] = {
-          x: portalX,
-          y: portalY,
-          name: "portal",
-          width: 90,
-          color: "52, 152, 219",
-          outline: "black", //does not affect color of portal currently, in client code, it uses rgb value
-          maxtimer: 5000, //starting number of timer, does not change, must be same value as timer when portal spawn
-          timer: 5000, //the higher the number, the longer the portal stays
-          peopleTouch: 0,
-          ruptured: 1,
-          enterNumber: 0,
-          prevList: [],
-          newList: [],
-          destination: "editor", //override default arena destination
-          where: i,
-        };
-        portalID++;
       } else if (choosingPortal == 7) {
         //spawn cavern portal
         console.log("a cavern portal spawned!");
@@ -11943,6 +11914,35 @@
           enterNumber: 0,
           prevList: [],
           newList: [],
+          where: i,
+        };
+        portalID++;
+      } else if (choosingPortal == 8) {
+        //spawn portal
+        console.log("a portal to tank editor spawned!");
+        for (var i = 0; i < portalLocations.length; i++) {
+          if (portalLocations[i].portalHere == "no") {
+            var portalX = portalLocations[i].x;
+            var portalY = portalLocations[i].y;
+            portalLocations[i].portalHere = "yes";
+            break;
+          }
+        }
+        portals[portalID] = {
+          x: portalX,
+          y: portalY,
+          name: "portal",
+          width: 90,
+          color: "52, 152, 219",
+          outline: "black", //does not affect color of portal currently, in client code, it uses rgb value
+          maxtimer: 5000, //starting number of timer, does not change, must be same value as timer when portal spawn
+          timer: 5000, //the higher the number, the longer the portal stays
+          peopleTouch: 0,
+          ruptured: 1,
+          enterNumber: 0,
+          prevList: [],
+          newList: [],
+          destination: "editor", //override default arena destination
           where: i,
         };
         portalID++;

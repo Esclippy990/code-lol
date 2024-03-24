@@ -11887,7 +11887,7 @@
           where: i,
         };
         portalID++;
-      } else if (choosingPortal == 7) {
+      } else if (choosingPortal <= 7) {
         //spawn cavern portal
         console.log("a cavern portal spawned!");
         for (var i = 0; i < portalLocations.length; i++) {
@@ -11917,7 +11917,7 @@
           where: i,
         };
         portalID++;
-      } else if (choosingPortal == 8) {
+      } else if (choosingPortal <= 8) {
         //spawn portal
         console.log("a portal to tank editor spawned!");
         for (var i = 0; i < portalLocations.length; i++) {

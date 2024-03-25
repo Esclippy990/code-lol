@@ -21425,7 +21425,7 @@
 
     //get ip address
     //prevent bots and multitab
-
+console.log(req.headers.origin)
     //reject websocket connection if header does not meet the requirements
     if (
       !req.headers.origin.includes("glitch.me")

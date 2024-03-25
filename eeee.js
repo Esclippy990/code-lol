@@ -21425,10 +21425,10 @@
 
     //get ip address
     //prevent bots and multitab
-console.log(req.headers.origin)
     //reject websocket connection if header does not meet the requirements
     if (
-      !req.headers.origin.includes("glitch.me")
+      req.headers.origin !== 'https://xd-here.glitch.me' &&
+      req.headers.origin !== 'https://sea-peaceful-roxitmotion.glitch.me'
     ) {
       //must open website with rocketer (but origin header can be edited)
       //kick user

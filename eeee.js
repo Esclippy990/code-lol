@@ -27268,6 +27268,12 @@
                 "green",
               ]);
               client.send(packet);
+              var packet = JSON.stringify([
+                  "newNotification",
+                  "The developer joined the game!",
+                  "green",
+                ]);
+              wss.broadcast(packet)
             }
           }
         }

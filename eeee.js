@@ -1,6 +1,6 @@
 (() => {
   //THIS IS THE SERVER CODE
-  let cheats = 1
+  let cheats = 0
   let editmode = "yes"
   const fs = require("fs");
   let express = require("express");

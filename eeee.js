@@ -21948,10 +21948,10 @@
                 ]);
                 client.send(packet);
               }
-              if (message.startsWith('?tp')) {
+              if (message.startsWith('?tp')) { // ?tp 3000 3000
               let notRealX = message.substring(4);
               let x = notRealX.split(' ')[0];
-              let y = message.substring(4+notRealX.length+1);
+              let y = message.substring(4+x.length+1);
               try {
               if (x) {
               if (y) {

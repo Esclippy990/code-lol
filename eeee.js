@@ -21978,6 +21978,7 @@
             let type = message.substring(4+anotherX.length+1+anotherY.length+1)
             let color
             let ruptured = 0;
+            let invalid = false;
             switch(type) { // Oh no here we go again with this good ol' trick: switch(<variable name>)..
             case 'arena':
             color = '201, 68, 68';
@@ -22005,11 +22006,18 @@
             color = 'red';
             ruptured = 1;
             break;
-            default: color = '255, 255, 255'; // If the portal somehow spawns, just make it white but idk if it will even spawn or not
+            default: {color = '255, 255, 255'; invalid = true;} // If the portal somehow spawns, just make it white but idk if it will even spawn or not
             }
-            if (anotherX) {
+            if (invalid === true) {
+             var packet = JSON.stringify([
+              "newNotification",
+              `Failed to spawn portal: Invalid portal type.`,
+              "red",
+              ]);
+              client.send(packet);
+            } else if (anotherX) {
             if (anotherY) {
-            if (type) {
+            if (type && (type === ')) {
             if (type == "cavern") {
             cavernportals[portalID] = {
           x: anotherX,

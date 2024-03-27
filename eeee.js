@@ -22017,7 +22017,7 @@
               client.send(packet);
             } else if (anotherX) {
             if (anotherY) {
-            if (type && (type === ')) {
+            if (type) {
             if (type == "cavern") {
             cavernportals[portalID] = {
           x: anotherX,

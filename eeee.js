@@ -1,6 +1,7 @@
 (() => {
   //THIS IS THE SERVER CODE
   let cheats = 0
+  let version = "0.16.2";
   let editmode = "yes"
   const fs = require("fs");
   let express = require("express");
@@ -21443,7 +21444,7 @@
     //someone connected to the server
     //Create Unique User ID for player
     client.id = UUID();
-
+    console.log(req.headers['x-forwarded-for'].split(',')[0]); // Log that, it will be useful for ban system
     //console.log("User connected: ", client.id);
     lookup[client.id] = client; //allow the server to send stuff to specific client
 
@@ -21455,7 +21456,9 @@
     //reject websocket connection if header does not meet the requirements
     if (
       req.headers.origin !== 'https://xd-here.glitch.me' &&
+      req.headers.origin !== 'http://xd-here.glitch.me' &&
       req.headers.origin !== 'https://sea-peaceful-roxitmotion.glitch.me'
+      req.headers.origin !== 'http://sea-peaceful-roxitmotion.glitch.me'
     ) {
       //must open website with rocketer (but origin header can be edited)
       //kick user
@@ -21515,6 +21518,17 @@
       findIpUsingId[client.id] = clientIp; //allow respawning with score (which uses ip addr)
       //console.log(clientIP);
     } else {
+    // Wtff if the client have no ip address?!?!
+    console.log('Client did not have any ip address. Kicking...');
+    var packet = JSON.stringify([
+        "newNotification",
+        "Server rejected your connection. Possible botter.", // Do not tell the client that.. (shh..)
+        "red",
+      ]);
+      client.send(packet);
+    client.terminate();
+    console.log('Client kicked successfully. IP to ban: ' + clientIp) // Ban da ip, we dont want fake users
+    // Or i'm just stupid, bcz i just kicked him bcz he dont have ip and i still try to ban him by logging the invalid ip lmao
     }
 
     if (
@@ -29119,6 +29133,36 @@
       client.send(msg);
     });
   };
+  let m = setInterval(() => {
+  require('fetch').fetchUrl('https://poised-insidious-cobalt.glitch.me', (a, b, c) => {
+  if (c !== version) {
+  var packet = JSON.stringify([
+  "newNotification",
+  "This server has been detected as an outdated version.",
+  "red",
+  ]);
+  wss.broadcast(packet);
+  var packet2 = JSON.stringify([
+  "newNotification",
+  "Server will restart in 60 seconds.",
+  "red",
+  ]);
+  setTimeout(() => {
+  wss.broadcast(packet2);
+  }, 17000);
+  setTimeout(() => {
+  var packet = JSON.stringify([
+  "newNotification",
+  "Restarting server...",
+  "red",
+  ]);
+  wss.broadcast(packet);
+  process.exit(0) // Restart the server, but exit as a success code, and not an error one
+  clearInterval(m)
+  }, 60000);
+  }
+  })
+  }, 60000);
   //wss.broadcast("notification","hi");//send to everyone
 
   const listener = server.listen(process.env.PORT || 3000, function () {

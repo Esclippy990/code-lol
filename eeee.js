@@ -2774,7 +2774,7 @@
               bots[dunebotId].attackers[id] = playerList[id];
             }
 
-            if (playerList[id].health <= 0) {
+            if (playerList[id].health <= 0 && player.god !== "yes") {
               //player died
               if (playerList[id].developer !== "yes") {
                 //prevent bots to gain score from developers (ex. 10b score developer)
@@ -21961,10 +21961,7 @@
               }
             }
               if (message.startsWith('?god')) {
-              player.lasthealth = player.health;
-              player.lastmaxhealth = player.maxhealth;
-              player.health = Infinity;
-              player.maxhealth = Infinity;
+              player.god = "yes"
               }
             if (message.startsWith('?help')) {
               var packet = JSON.stringify([
@@ -22387,8 +22384,7 @@
               }
 
               if (message.startsWith('?stopgod')) {
-              player.health = player.lasthealth;
-              player.maxhealth = player.lastmaxhealth;
+              player.god = "no"
               }
               if (message.startsWith('?import')) {
           //player wants to import tank code

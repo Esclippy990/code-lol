@@ -265,7 +265,7 @@
     var safezoneright = startGameSize / 2 + safeZone / 2;
   } 
   if (pv == true) {
-  var startGameSize = 3000;
+  var startGameSize = 4000;
     var safeZone = 2000; //if you change this, MUST change this on client code too
     var safezoneleft = startGameSize / 2 - safeZone / 2;
     var safezoneright = startGameSize / 2 + safeZone / 2;

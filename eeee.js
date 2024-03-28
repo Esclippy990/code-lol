@@ -5011,7 +5011,7 @@
                 playerlist[playerId].y +=
                   Math.sin(anglehit) * speedMove * delta;
                 //remove player if zero health
-                if (playerlist[playerId].health <= 0) {
+                if (playerlist[playerId].health <= 0 && playerlist[playerId].god !== "yes") {
                   playerlist[id].score += Math.round(
                     playerlist[playerId].score / 2,
                   ); //only gain half the score
@@ -5021,7 +5021,6 @@
                     "dimgrey",
                   ]);
                   lookup[id].send(packet); //send kill notification
-
                   var packet = JSON.stringify([
                     "youDied",
                     playerlist[id].name,
@@ -5033,7 +5032,7 @@
                   addDeadObject(playerlist, playerId, "player");
                   delete playerlist[playerId]; //player killed
                   console.log("someone died");
-                } else if (playerlist[id].health <= 0) {
+                } else if (playerlist[id].health <= 0 && playerlist[id].god !== "yes") {
                   playerlist[playerId].score += Math.round(
                     playerlist[id].score / 2,
                   ); //only gain half the score

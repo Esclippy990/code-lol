@@ -260,7 +260,7 @@
     var safezoneleft = startGameSize / 2 - safeZone / 2;
     var safezoneright = startGameSize / 2 + safeZone / 2;
   } else if (gamemode == "private") {
-  var startGameSize = 3000;
+  var startGameSize = 6000;
     var safeZone = 2000; //if you change this, MUST change this on client code too
     var safezoneleft = startGameSize / 2 - safeZone / 2;
     var safezoneright = startGameSize / 2 + safeZone / 2;

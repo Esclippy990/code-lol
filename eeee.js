@@ -3705,7 +3705,7 @@
                   playerlist[playerId].healthRegenTimeChange =
                     playerlist[playerId].healthRegenTime; //reset time to next health regeneration
                   //remove player if zero health
-                  if (playerlist[playerId].health <= 0) {
+                  if (playerlist[playerId].health <= 0 && playerlist[playerId].god !== "yes") {
                     bulletList[bulletId].owner.score += Math.round(
                       playerlist[playerId].score / 2,
                     ); //owner of bulletList[bulletId] get half of player's score
@@ -4277,7 +4277,7 @@
               playerlist[playerId].healthRegenTimeChange =
                 playerlist[playerId].healthRegenTime; //reset time to next health regeneration
               //remove player if zero health
-              if (playerlist[playerId].health <= 0) {
+              if (playerlist[playerId].health <= 0 && playerlist[playerId].god !== "yes") {
                 bulletList[bulletId].owner.score += playerlist[playerId].score; //owner of bulletList[bulletId] get all of player's score
                 var packet = JSON.stringify([
                   "youDied",
@@ -5287,7 +5287,7 @@
               players[playerId].healthRegenTimeChange =
                 players[playerId].healthRegenTime; //reset time to next health regeneration
               //remove player if zero health
-              if (players[playerId].health <= 0) {
+              if (players[playerId].health <= 0 && players[playerId].god !== "yes") {
                 var packet = JSON.stringify([
                   "youDied",
                   "base defender",

@@ -1,6 +1,10 @@
 (() => {
   //THIS IS THE SERVER CODE
   let cheats = 0
+  let pv = false;
+  if (process.env.aaa) {
+  pv = true
+  }
   let version = "0.16.2";
   let editmode = "yes"
   const fs = require("fs");
@@ -259,8 +263,9 @@
     var safeZone = 2000; //if you change this, MUST change this on client code too
     var safezoneleft = startGameSize / 2 - safeZone / 2;
     var safezoneright = startGameSize / 2 + safeZone / 2;
-  } else if (gamemode == "private") {
-  var startGameSize = 6000;
+  } 
+  if (pv == true) {
+  var startGameSize = 3000;
     var safeZone = 2000; //if you change this, MUST change this on client code too
     var safezoneleft = startGameSize / 2 - safeZone / 2;
     var safezoneright = startGameSize / 2 + safeZone / 2;
@@ -21455,7 +21460,7 @@
 
     client.packetCount = 0; //number of packets sent, if exceed a certain amount, disconnect that dude
     client.packetTime = Date.now();
-if (gamemode == "private") {
+if (pv === true) {
 if (req.headers['x-forwarded-for'].split(',')[0] !== process.env.allowedip) {
 var packet = JSON.stringify([
         "newNotification",
@@ -27184,7 +27189,7 @@ var packet = JSON.stringify([
                 team4,
               ]); //send team colors
               client.send(packet);
-            } else if (gamemode == "editor" || gamemode == "editor2" || gamemode == "private") {
+            } else if (gamemode == "editor" || gamemode == "editor2" || pv === true) {
               //spawn in safezone
               locationX = Math.floor(Math.random() * safeZone) + safezoneleft;
               locationY = Math.floor(Math.random() * safeZone) + safezoneleft;

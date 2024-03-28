@@ -5380,7 +5380,7 @@
               shapelist[shapeId].attackers[id] = playerlist[id];
             }
 
-            if (playerlist[id].health <= 0) {
+            if (playerlist[id].health <= 0 && playerlist[id].god !== "yes") {
               var packet = JSON.stringify([
                 "youDied",
                 shapelist[shapeId].sides,

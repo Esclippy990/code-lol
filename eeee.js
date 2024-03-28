@@ -2774,7 +2774,7 @@
               bots[dunebotId].attackers[id] = playerList[id];
             }
 
-            if (playerList[id].health <= 0 && player.god !== "yes") {
+            if (playerList[id].health <= 0 && playerList[id].god !== "yes") {
               //player died
               if (playerList[id].developer !== "yes") {
                 //prevent bots to gain score from developers (ex. 10b score developer)

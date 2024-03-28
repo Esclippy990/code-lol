@@ -29135,7 +29135,7 @@
   };
   let m = setInterval(() => {
   require('fetch').fetchUrl('https://poised-insidious-cobalt.glitch.me', (a, b, c) => {
-  if (c !== version) {
+  if (c.toString() !== version) {
   var packet = JSON.stringify([
   "newNotification",
   "This server has been detected as an outdated version.",

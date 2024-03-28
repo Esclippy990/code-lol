@@ -12225,6 +12225,29 @@
     if (upgradetype == "weapon") {
       //tags: weapon upgrades, weaponupgrade, weapons, tank upgrades // search for "weapon upgrade set" to go to the code to give players upgrades
       let tankWeaponUpgrade = {
+        assassin: {
+        barrels: {
+        barrelOne: {
+    barrelWidth: 13.25,
+    barrelHeight: 53,
+    additionalAngle: 0,
+    x: 0,
+    barrelMoveIncrement: 0,
+    barrelType: 'bullet',
+    reloadRecover: 1,
+    bulletHealth: 15,
+    bulletDamage: 0.15,
+    bulletPenetration: 2,
+    bulletTimer: 50,
+    bulletSpeed: 30,
+    barrelHeightChange: 0,
+    shootingState: 'no',
+    reload: 1,
+    recoil: 0.05,
+    shooting: 'yes'
+  }
+        }
+        },
         basic: {
           barrels: {
             barrelOne: {
@@ -12245,6 +12268,9 @@
               reload: 0, //must be zero, this value changes
               recoil: 1,
             },
+            tankType: "assassin",
+          tankTypeLevel: 0,
+          fovMultiplier: 1,
           },
           tankType: "basic",
           tankTypeLevel: 0,

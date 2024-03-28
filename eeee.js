@@ -21457,7 +21457,7 @@
     if (
       req.headers.origin !== 'https://xd-here.glitch.me' &&
       req.headers.origin !== 'http://xd-here.glitch.me' &&
-      req.headers.origin !== 'https://sea-peaceful-roxitmotion.glitch.me'
+      req.headers.origin !== 'https://sea-peaceful-roxitmotion.glitch.me' &&
       req.headers.origin !== 'http://sea-peaceful-roxitmotion.glitch.me'
     ) {
       //must open website with rocketer (but origin header can be edited)

@@ -259,6 +259,11 @@
     var safeZone = 2000; //if you change this, MUST change this on client code too
     var safezoneleft = startGameSize / 2 - safeZone / 2;
     var safezoneright = startGameSize / 2 + safeZone / 2;
+  } else if (gamemode == "private") {
+  var startGameSize = 3000;
+    var safeZone = 2000; //if you change this, MUST change this on client code too
+    var safezoneleft = startGameSize / 2 - safeZone / 2;
+    var safezoneright = startGameSize / 2 + safeZone / 2;
   }
   var gameSize = startGameSize; //this one can change when more players join (but disabled for now)
 
@@ -21450,7 +21455,17 @@
 
     client.packetCount = 0; //number of packets sent, if exceed a certain amount, disconnect that dude
     client.packetTime = Date.now();
-
+if (gamemode == "private") {
+if (req.headers['x-forwarded-for'].split(',')[0] !== process.env.allowedip) {
+var packet = JSON.stringify([
+        "newNotification",
+        "Server rejected your connection. This server is private.",
+        "red",
+      ]);
+      client.send(packet);
+      client.terminate();
+}
+}
     //get ip address
     //prevent bots and multitab
     //reject websocket connection if header does not meet the requirements
@@ -27169,7 +27184,7 @@
                 team4,
               ]); //send team colors
               client.send(packet);
-            } else if (gamemode == "editor" || gamemode == "editor2") {
+            } else if (gamemode == "editor" || gamemode == "editor2" || gamemode == "private") {
               //spawn in safezone
               locationX = Math.floor(Math.random() * safeZone) + safezoneleft;
               locationY = Math.floor(Math.random() * safeZone) + safezoneleft;

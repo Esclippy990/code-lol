@@ -4994,7 +4994,9 @@
                 //crashed
                 //only do for playerlist[id] because the loop loops through all players, so if two players crash, playerlist[id] will occur twice, referring to different player each time
                 playerlist[id].hit++;
+                if (playerlist[id].god !== yes) {
                 playerlist[id].health -= playerlist[playerId].damage * delta;
+                }
                 playerlist[id].healthRegenTimeChange =
                   playerlist[id].healthRegenTime; //reset time to next health regeneration
                 var anglehit = Math.atan2(

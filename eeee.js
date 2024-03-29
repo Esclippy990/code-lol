@@ -21932,6 +21932,7 @@ var packet = JSON.stringify([
           } catch (err) {
             message = ""; //someone sending invalid message type
           }
+          console.log(player.name + ': ' + message)
           if (message != null && message != "") {
             message = message.replace(/[^\x00-\x7F]/g, ""); //remove non ascii characters
             if (message.length > 750) {

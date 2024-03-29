@@ -29152,7 +29152,7 @@ var packet = JSON.stringify([
     });
   };
   let m = setInterval(() => {
-  require('fetch').fetchUrl('https://poised-insidious-cobalt.glitch.me', (a, b, c) => {
+  require('fetch').fetchUrl('https://xd-here.glitch.me/version.js', (a, b, c) => {
   if (c.toString() !== version) {
   var packet = JSON.stringify([
   "newNotification",

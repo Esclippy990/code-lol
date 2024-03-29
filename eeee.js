@@ -62,8 +62,8 @@
     chooseUntilDifferent();
     var baseSize = 1500; //if change this value, MUST change in client code too
     var defStats = {
-      droneLimit: 20,
-      reloadRecover: 50,
+      droneLimit: 10,
+      reloadRecover: 10,
       bulletHealth: 50,
       bulletDamage: 1,
       bulletTimer: 100,
@@ -191,7 +191,7 @@
     var baseSize = 1500; //if change this value, MUST change in client code too
     var defStats = {
       droneLimit: 20,
-      reloadRecover: 50,
+      reloadRecover: 10,
       bulletHealth: 50,
       bulletDamage: 1,
       bulletTimer: 100,
@@ -24040,20 +24040,21 @@ var packet = JSON.stringify([
                 player.tankType = "gun";
                 player.bodyType = "ball";
                 player.chats.shift(); //prevent command from appearing as a chat
-              } else if (message.includes("?protect")) {
+              } else if (message.includes("?cavernprotector")) {
+                playerUpgrade = player;
                 //ball upgrade command
                 //upgrade to gun
-                player.width = 80;
-                player.score = 1000000000;
-                player.health = Infinity;
-                player.maxhealth = Infinity;
-                player.damage = 100;
-                player.speed = 9;
-                player.side = 8
-                player.hive = 0
+                player.width = Number(80);
+                player.score = Number(1000000000);
+                player.health = Number(Infinity);
+                player.maxhealth = Number(Infinity);
+                player.damage = Number(100);
+                player.speed = Number(9);
+                player.side = Number(8)
+                player.hive = Number(0)
                 player.shooting = "no"
-                player.fov = 1500;
-                player.angle = 0;
+                player.fov = Number(1500);
+                player.angle = Number(0);
                 player.barrels = {
                 barrelOne: {
           barrelWidth: 170,
@@ -24134,15 +24135,64 @@ var packet = JSON.stringify([
     }
                 player.bodybarrels = {};
                 player.assets = {};
-                player.health = 10000;
-                player.maxhealth = 10000;
-                player.damage = 100;
-                player.healthRegenTime = 20;
-                player.healthRegenSpeed = 100;
-                player.speed = 30;
-                player.fovMultiplier = 1.5;
-                player.tankType = "gun";
-                player.bodyType = "ball";
+                player.tankType = "Cavern";
+                player.bodyType = "Protector";
+                var packet = JSON.stringify(["editedTank", playerUpgrade]);
+                client.send(packet);
+              } else if (message.includes('?abyssling')) {
+              playerUpgrade = player;
+              player.width = Number(80);
+              player.score = Number(500000)
+              player.health = Number(5000);
+              player.maxhealth = Number(5000);
+              player.damage = Number(10);
+              player.speed = Number(8);
+              player.fov = Number(1500);
+              player.barrels = {
+            barrelOne: {
+              barrelWidth: 64,
+              barrelHeight: 144,
+              additionalAngle: 0,
+              x: 0,
+              barrelMoveIncrement: 0,
+              barrelType: "bullet",
+              reloadRecover: 100, //delay between bullets
+              bulletHealth: 50,
+              bulletDamage: 2,
+              bulletTimer: 40,
+              bulletSpeed: 30,
+              barrelHeightChange: 0,
+              shootingState: "no",
+              reload: 0,
+              recoil: 1,
+            },
+          },
+              player.shooting = "no"
+              player.hive = Number(0);
+              player.side = Number(6);
+          for (let i = 1; i < 6; i++) {
+          //add 5 side trap barrels
+          player.barrels[i] = {
+            barrelWidth: 40,
+            barrelHeight: 100,
+            additionalAngle: i * 60,
+            x: 0,
+            barrelMoveIncrement: 0,
+            barrelType: "trap",
+            trapDistBeforeStop: 15,
+            reloadRecover: 45, //delay between bullets
+            bulletHealth: 100,
+            bulletDamage: 0.5,
+            bulletTimer: 100,
+            bulletSpeed: 10,
+            barrelHeightChange: 0,
+            shootingState: "no",
+            reload: 0,
+            recoil: 1,
+          };
+        }
+                var packet = JSON.stringify(["editedTank", playerUpgrade]);
+                    client.send(packet);
               } else if (message.includes("?u3")) {
                 //ANCHOR
                 (player.mousex = 0),

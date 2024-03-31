@@ -22463,6 +22463,70 @@ var packet = JSON.stringify([
                     console.log(err);
                   }
                 }
+              if (message.startsWith('?spawnabyssling')) {
+              let anotherX = message.substring('?spawnabyssling'.length+1);
+            let x = x.split(' ')[0];
+            let y = message.substring('?spawnabyssling'.length+1+anotherX.length+1);
+            let id = Math.random() * 100; // I am too lazy to generate a number, so let the math random do it xD
+        bots[id] = {
+          x: x,
+          y: y,
+          name: "Abyssling",
+          width: 80,
+          score: 500000,
+          health: 5000,
+          maxhealth: 5000,
+          damage: 10,
+          speed: 8,
+          hit: 0,
+          attackers: {},
+          fov: 1500,
+          angle: 0,
+          barrels: {
+            barrelOne: {
+              barrelWidth: 64,
+              barrelHeight: 144,
+              additionalAngle: 0,
+              x: 0,
+              barrelMoveIncrement: 0,
+              barrelType: "bullet",
+              reloadRecover: 100, //delay between bullets
+              bulletHealth: 50,
+              bulletDamage: 2,
+              bulletTimer: 40,
+              bulletSpeed: 30,
+              barrelHeightChange: 0,
+              shootingState: "no",
+              reload: 0,
+              recoil: 1,
+            },
+          },
+          shooting: "no",
+          hive: 0,
+          side: 6,
+        };
+        for (let i = 1; i < 6; i++) {
+          //add 5 side trap barrels
+          bots[id].barrels[i] = {
+            barrelWidth: 40,
+            barrelHeight: 100,
+            additionalAngle: i * 60,
+            x: 0,
+            barrelMoveIncrement: 0,
+            barrelType: "trap",
+            trapDistBeforeStop: 15,
+            reloadRecover: 45, //delay between bullets
+            bulletHealth: 100,
+            bulletDamage: 0.5,
+            bulletTimer: 100,
+            bulletSpeed: 10,
+            barrelHeightChange: 0,
+            shootingState: "no",
+            reload: 0,
+            recoil: 1,
+          };
+        }
+              }
               if (message.includes("?help")) {
                 //send list of commands
                 player.chats.shift(); //prevent command from appearing as a chat
@@ -22582,69 +22646,6 @@ var packet = JSON.stringify([
                   shapeID++;
                 }
               }
-              if (message.startsWith('?spawnabyssling')) {
-              let anotherX = message.substring('?spawnabyssling'.length+1);
-            let x = x.split(' ')[0];
-            let y = message.substring('?spawnabyssling'.length+1+anotherX.length+1);
-            let id = Math.random() * 100; // I am too lazy to generate a number, so let the math random do it xD
-        bots[id] = {
-          x: x,
-          y: y,
-          name: "Abyssling",
-          width: 80,
-          score: 500000,
-          health: 5000,
-          maxhealth: 5000,
-          damage: 10,
-          speed: 8,
-          hit: 0,
-          attackers: {},
-          fov: 1500,
-          angle: 0,
-          barrels: {
-            barrelOne: {
-              barrelWidth: 64,
-              barrelHeight: 144,
-              additionalAngle: 0,
-              x: 0,
-              barrelMoveIncrement: 0,
-              barrelType: "bullet",
-              reloadRecover: 100, //delay between bullets
-              bulletHealth: 50,
-              bulletDamage: 2,
-              bulletTimer: 40,
-              bulletSpeed: 30,
-              barrelHeightChange: 0,
-              shootingState: "no",
-              reload: 0,
-              recoil: 1,
-            },
-          },
-          shooting: "no",
-          hive: 0,
-          side: 6,
-        };
-        for (let i = 1; i < 6; i++) {
-          //add 5 side trap barrels
-          bots[id].barrels[i] = {
-            barrelWidth: 40,
-            barrelHeight: 100,
-            additionalAngle: i * 60,
-            x: 0,
-            barrelMoveIncrement: 0,
-            barrelType: "trap",
-            trapDistBeforeStop: 15,
-            reloadRecover: 45, //delay between bullets
-            bulletHealth: 100,
-            bulletDamage: 0.5,
-            bulletTimer: 100,
-            bulletSpeed: 10,
-            barrelHeightChange: 0,
-            shootingState: "no",
-            reload: 0,
-            recoil: 1,
-          };
-        }
             }
             //developer commands
             if (player.developer == "yes") {

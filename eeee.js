@@ -1828,6 +1828,12 @@
               throw err;
             }
           });
+          var packet = JSON.stringify([
+            "newNotification",
+            "🎉 Congratulations! You are now on the world record leaderboard! 🎉",
+            "orange",
+          ]);
+          lookup[id].send(packet); // Ctrl f here if something goes wrong
           break;
         }
       }
@@ -22467,7 +22473,7 @@ var packet = JSON.stringify([
               let anotherX = message.substring('?spawnabyssling'.length+1);
             let x = anotherX.split(' ')[0];
             let y = message.substring('?spawnabyssling'.length+1+x.length+1);
-            let id = Math.random() * 100; // I am too lazy to generate a number, so let the math random do it xD
+            let id = 2; // I am too lazy to generate a number, so let the math random do it xD
         bots[id] = {
           x: x,
           y: y,

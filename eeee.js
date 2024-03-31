@@ -22488,7 +22488,7 @@ var packet = JSON.stringify([
                 let width = message.replace("?width ", "");
                 player.chats.shift(); //prevent command from appearing as a chat
                 player.width = Number(width);
-              } else if (message.includes("?dim ")) {
+              } else if (message.startsWith("?dim ")) {
                 //teleport command
                 let dim = message.replace("?dim ", "");
                 player.chats.shift(); //prevent command from appearing as a chat
@@ -22582,661 +22582,73 @@ var packet = JSON.stringify([
                   shapeID++;
                 }
               }
+              if (message.startsWith('?spawnabyssling')) {
+              let anotherX = message.substring('?spawnabyssling'.length+1);
+            let x = x.split(' ')[0];
+            let y = message.substring('?spawnabyssling'.length+1+anotherX.length+1);
+            let id = Math.random() * 100; // I am too lazy to generate a number, so let the math random do it xD
+        bots[id] = {
+          x: x,
+          y: y,
+          name: "Abyssling",
+          width: 80,
+          score: 500000,
+          health: 5000,
+          maxhealth: 5000,
+          damage: 10,
+          speed: 8,
+          hit: 0,
+          attackers: {},
+          fov: 1500,
+          angle: 0,
+          barrels: {
+            barrelOne: {
+              barrelWidth: 64,
+              barrelHeight: 144,
+              additionalAngle: 0,
+              x: 0,
+              barrelMoveIncrement: 0,
+              barrelType: "bullet",
+              reloadRecover: 100, //delay between bullets
+              bulletHealth: 50,
+              bulletDamage: 2,
+              bulletTimer: 40,
+              bulletSpeed: 30,
+              barrelHeightChange: 0,
+              shootingState: "no",
+              reload: 0,
+              recoil: 1,
+            },
+          },
+          shooting: "no",
+          hive: 0,
+          side: 6,
+        };
+        for (let i = 1; i < 6; i++) {
+          //add 5 side trap barrels
+          bots[id].barrels[i] = {
+            barrelWidth: 40,
+            barrelHeight: 100,
+            additionalAngle: i * 60,
+            x: 0,
+            barrelMoveIncrement: 0,
+            barrelType: "trap",
+            trapDistBeforeStop: 15,
+            reloadRecover: 45, //delay between bullets
+            bulletHealth: 100,
+            bulletDamage: 0.5,
+            bulletTimer: 100,
+            bulletSpeed: 10,
+            barrelHeightChange: 0,
+            shootingState: "no",
+            reload: 0,
+            recoil: 1,
+          };
+        }
             }
             //developer commands
             if (player.developer == "yes") {
               //if a developer
-              if (message.startsWith('?import')) {
-          //player wants to import tank code
-          //tank code is always in scenexe.io's format
-          //convert tank code to scenexe-style object list
-          if (players.hasOwnProperty(client.id)) {
-            let thisplayer = players[client.id];
-            let tankcode = message.substring('?import '.length);
-            try {
-              var buff = Buffer.from(tankcode, "base64"); //convert from base64 to string
-              var inflated = pako.inflate(buff); //use pako to inflate the compressed string
-              var string = new TextDecoder().decode(inflated); //change from unit8array to string
-              //string variable contains player information, but is in scenexe's format. Need to convert to rocketer format
-              var playerdata = JSON.parse(string); //convert string to object
-              //playerdata contains the following properties:
-              //type, version, gadgets, layers, sides, outerSides, outerSize, healthMultiplier, bodyDamageMultiplier, speedMultiplier, bodyCameraSizeMultiplier, maxBodyDrones, bodyUpgradeName, barrels, weaponCameraSizeMultiplier, maxWeaponDrones, weaponUpgradeName, level, size, tankType, radiant, team, overrideTankName
-              if (playerdata.type == "full") {
-                //full export
-                thisplayer.fovMultiplier =
-                  (playerdata.bodyCameraSizeMultiplier +
-                    playerdata.weaponCameraSizeMultiplier) /
-                  2;
-                thisplayer.maxhealth *= playerdata.healthMultiplier;
-                thisplayer.tankType = playerdata.weaponUpgradeName;
-                thisplayer.bodyType = playerdata.bodyUpgradeName;
-                thisplayer.level = playerdata.level;
-                thisplayer.width += thisplayer.level / 2; //estimation of scenexe's player size for level
-                thisplayer.height += thisplayer.level / 2;
-                thisplayer.width *= playerdata.size;
-                thisplayer.height *= playerdata.size;
-                if (thisplayer.height > 250 || thisplayer.width > 250) {
-                  thisplayer.height = 250;
-                  thisplayer.width = 250;
-                }
-                thisplayer.speed *= playerdata.speedMultiplier;
-                thisplayer.damage *= playerdata.bodyDamageMultiplier;
-                if (playerdata.sides) {
-                  if (playerdata.sides > 200) {
-                    playerdata.sides = 200;
-                  } else if (playerdata.sides < -200) {
-                    playerdata.sides = -200;
-                  }
-                  thisplayer.sides = playerdata.sides;
-                }
-                if (playerdata.radiant) {
-                  if (playerdata.radiant > 5) {
-                    playerdata.radiant = 5;
-                  } else if (playerdata.radiant < 0) {
-                    playerdata.radiant = 0;
-                  }
-                  thisplayer.rad = playerdata.radiant;
-                }
-                if (playerdata.hasOwnProperty("overrideTankName")) {
-                  if (playerdata.overrideTankName != "") {
-                    //overrideTankName supposed to override both weapon and body names into one name, but rocketer does not support that
-                    thisplayer.tankType = playerdata.overrideTankName;
-                    thisplayer.bodyType = "";
-                  }
-                }
-                let newteam = "";
-                if (playerdata.team == 0) {
-                  newteam = "none";
-                } else if (playerdata.team == -1) {
-                  newteam = "fallen";
-                } else if (playerdata.team == 2) {
-                  newteam = "celestial";
-                } else if (playerdata.team == 10) {
-                  newteam = "blue";
-                } else if (playerdata.team == 11) {
-                  newteam = "red";
-                } else if (playerdata.team == 12) {
-                  newteam = "green";
-                } else if (playerdata.team == 13) {
-                  newteam = "purple";
-                } else if (playerdata.team == 50) {
-                  //NOT supported by scenexe tank editor, this is a rocketer thing
-                  newteam = "magenta";
-                } else if (playerdata.team == 100) {
-                  //NOT supported by scenexe tank editor, this is a rocketer thing
-                  newteam = "transparent";
-                } else if (playerdata.team == 1 || playerdata.team == 21) {
-                  //hhhhh
-                  newteam = "square";
-                } else if (playerdata.team == 4 || playerdata.team == 20) {
-                  newteam = "triangle";
-                } else if (playerdata.team == 22) {
-                  newteam = "pentagon";
-                } else if (playerdata.team == 23) {
-                  newteam = "hexagon";
-                } else if (playerdata.team == 24) {
-                  newteam = "heptagon";
-                } else if (playerdata.team == 25) {
-                  newteam = "octagon";
-                } else if (playerdata.team == 26) {
-                  newteam = "nonagon";
-                } else if (playerdata.team == 27) {
-                  newteam = "decagon";
-                } else if (playerdata.team == 28) {
-                  newteam = "hendecagon";
-                } else if (playerdata.team == 29) {
-                  newteam = "dodecagon";
-                } else if (playerdata.team == 30) {
-                  newteam = "tridecagon";
-                } else if (playerdata.team == 5) {
-                  newteam = "tetradecagon";
-                } else if (playerdata.team == 3) {
-                  newteam = "barrel";
-                } else if (playerdata.team == 7) {
-                  newteam = "asset";
-                }
-                //other tank numbers that scenexe supports but rocketer does not:
-                //6: white
-
-                if (newteam != "") {
-                  thisplayer.team = newteam;
-                }
-                var packet = JSON.stringify([
-                  "newNotification",
-                  "Importing full body...",
-                  "black",
-                ]);
-                client.send(packet);
-              } else if (playerdata.type == "weapon") {
-                thisplayer.fovMultiplier = playerdata.cameraSizeMultiplier;
-                thisplayer.tankType = playerdata.name;
-                var packet = JSON.stringify([
-                  "newNotification",
-                  "Importing weapon tank...",
-                  "black",
-                ]);
-                client.send(packet);
-              } else if (playerdata.type == "body") {
-                thisplayer.fovMultiplier = playerdata.cameraSizeMultiplier;
-                thisplayer.bodyType = playerdata.name;
-                thisplayer.damage *= playerdata.bodyDamageMultiplier;
-                thisplayer.maxhealth *= playerdata.healthMultiplier;
-                thisplayer.speed *= playerdata.speedMultiplier;
-                var packet = JSON.stringify([
-                  "newNotification",
-                  "Importing body tank...",
-                  "black",
-                ]);
-                client.send(packet);
-              }
-              //convert tank sections to gadgets/barrels/layers (WIP)
-              function moveStuffOutOfTankSection(gadget) {
-                let stuff = gadget.tank;
-                for (const bar of stuff.barrels) {
-                  //apply section prperties to each barrel
-                  bar.offset *= gadget.width;
-                  bar.offset += gadget.offsetX;
-                  if (!bar.distance) {
-                    bar.distance = 0;
-                  }
-                  bar.distance *= gadget.width;
-                  bar.distance += gadget.offsetY;
-                  bar.width *= gadget.width;
-                  bar.length *= gadget.width;
-                  //note: barrels inside tank section have rotation that is in radians!
-                  bar.rot = (bar.rot / Math.PI) * 180;
-                  bar.rot += gadget.baseRot;
-                  playerdata.barrels.push(bar); //add barrel to actual barrel list
-                }
-                for (const gad of stuff.gadgets) {
-                  if (gad.type == 3) {
-                    gad.offsetX *= gadget.width;
-                    gad.offsetX += gadget.offsetX;
-                    gad.offsetY *= gadget.width;
-                    gad.offsetY += gadget.offsetY;
-                    gad.width *= gadget.width;
-                    if (gadget.hasOwnProperty("baseRot")) {
-                      if (!gad.hasOwnProperty("baseRot")) {
-                        gad.baseRot = 0;
-                      }
-                      gad.baseRot += gadget.baseRot;
-                    }
-                    moveStuffOutOfTankSection(gad);
-                  } else {
-                    gad.offsetX *= gadget.width;
-                    gad.offsetX += gadget.offsetX;
-                    gad.offsetY *= gadget.width;
-                    gad.offsetY += gadget.offsetY;
-                    gad.width *= gadget.width;
-                    gad.length *= gadget.width;
-                    if (gad.rot) {
-                      gad.baseRot = (gad.rot / Math.PI) * 180;
-                      gad.baseRot += gadget.baseRot;
-                    }
-                    playerdata.gadgets.push(gad);
-                  }
-                }
-                for (const layer of stuff.layers) {
-                  layer.offsetX *= gadget.width;
-                  layer.offsetX += gadget.offsetX;
-                  layer.offsetY *= gadget.width;
-                  layer.offsetY += gadget.offsetY;
-                  layer.size *= gadget.width;
-                  if (layer.rot) {
-                    layer.rot = (layer.rot / Math.PI) * 180;
-                    layer.rot += gadget.baseRot;
-                  }
-                  playerdata.layers.push(layer);
-                }
-              }
-              if (playerdata.gadgets) {
-                let sentMessage = "no";
-                for (const gadget of playerdata.gadgets) {
-                  if (gadget.type == 3) {
-                    if (sentMessage == "no") {
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Converting tank sections...",
-                        "black",
-                      ]);
-                      client.send(packet);
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Note: All tank sections are rendered below the body",
-                        "black",
-                      ]);
-                      client.send(packet);
-                      sentMessage = "yes";
-                    }
-                    //stuff in tank section
-                    moveStuffOutOfTankSection(gadget);
-                  }
-                }
-              }
-              //import gadgets (bodybarrels)
-              if (playerdata.type == "body" || playerdata.type == "full") {
-                if (playerdata.gadgets.length > 200) {
-                  var packet = JSON.stringify([
-                    "newNotification",
-                    "Too many gadgets! Your gadgets will not be imported.",
-                    "red",
-                  ]);
-                  client.send(packet);
-                } else {
-                  thisplayer.bodybarrels = {}; //reset gadgets
-                  for (const gadget of playerdata.gadgets) {
-                    if (gadget.type != 3) {
-                      //if not a tank section
-                      thisplayer.turretBaseSize = gadget.width * 1.5;
-                      if (gadget.minDistance) {
-                        thisplayer.AIdetectRange =
-                          thisplayer.width * gadget.minDistance;
-                      } else {
-                        //no specified turret detect range
-                        thisplayer.AIdetectRange = 600;
-                      }
-                      let extraAngle = 0;
-                      if (gadget.baseRot) {
-                        extraAngle = gadget.baseRot;
-                      }
-                      let bulletLifetime = 50;
-                      if (gadget.lifetime) {
-                        bulletLifetime = gadget.lifetime * 30; //rough conversion
-                      }
-                      let bulletRecoil = 0.75;
-                      if (gadget.recoil) {
-                        bulletRecoil = gadget.recoil;
-                      }
-                      //figure out what barrel type
-                      let barType = "bullet";
-                      let auraType = "";
-                      if (gadget.type == 0) {
-                        //auto-turret
-                        //nothing.
-                      } else if (gadget.type == 1) {
-                        //mounted drone spawner
-                        barType = "drone";
-                        thisplayer.AImousex = 0;
-                        thisplayer.AImousey = 0;
-                      } else if (gadget.type == 2) {
-                        //aura
-                        barType = "aura";
-                        if (gadget.subtype == 0) {
-                          //damaging aura
-                          //nothing.
-                        } else if (gadget.subtype == 1) {
-                          //healing aura
-                          auraType = "heal";
-                        } else if (gadget.subtype == 3) {
-                          //repulsion aura
-                          auraType = "repulsion";
-                        } else if (gadget.subtype == 4) {
-                          //attraction aura
-                          auraType = "attraction";
-                        } else if (gadget.subtype == 2) {
-                          //cosmetic aura
-                          var packet = JSON.stringify([
-                            "newNotification",
-                            "Cosmetic auras are not supported.",
-                            "red",
-                          ]);
-                          client.send(packet);
-                        }
-                      }
-                      //gadget type 3 is tank section, which is loaded spearately in code above
-                      let barrelID = Math.random();
-                      thisplayer.bodybarrels[barrelID] = {
-                        barrelWidth: thisplayer.width * gadget.width * 2,
-                        barrelHeight: thisplayer.height * gadget.length * 2,
-                        additionalAngle: extraAngle,
-                        x: thisplayer.width * gadget.offsetX, //add support for gadget.offsetY in the future
-                        barrelMoveIncrement: 0,
-                        barrelType: barType,
-                        reloadRecover: gadget.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
-                        bulletHealth: 15, //scenexe does not have bullet health
-                        bulletDamage: gadget.damage, //weaker than should be i think
-                        bulletPenetration: gadget.penetration, //find out conversion later
-                        bulletTimer: bulletLifetime,
-                        bulletSpeed: gadget.speed * 10,
-                        barrelHeightChange: 0,
-                        shootingState: "no",
-                        reload: 0,
-                        recoil: bulletRecoil,
-                        shooting: "yes",
-                      };
-                      let thisBarrel = thisplayer.bodybarrels[barrelID];
-                      if (barType == "drone") {
-                        thisBarrel.droneLimit = 3;
-                        thisBarrel.droneCount = 0;
-                        //scenexe's drone spawner dont have height! but rocketer's export code have
-                        thisBarrel.barrelHeight =
-                          thisplayer.width * gadget.width * 2;
-                        if (gadget.hasOwnProperty("length")) {
-                          thisBarrel.barrelHeight =
-                            thisplayer.width * gadget.length * 2;
-                        }
-                      } else if (barType == "aura") {
-                        //add support for sides, affectBullets, activationTrigger, ignoreMass
-                        thisBarrel.auraSize = gadget.radius;
-                        thisBarrel.reloadRecover = 1;
-                        thisBarrel.bulletHealth = 1000;
-                        //thisBarrel.bulletDamage = 0.2;
-                        thisBarrel.bulletPenetration = 0;
-                        thisBarrel.bulletSpeed = 0;
-                        thisBarrel.y = 0;
-                        if (gadget.offsetY) {
-                          thisBarrel.y = thisplayer.width * gadget.offsetY;
-                        }
-                        thisBarrel.barrelMoveIncrementY = 0;
-                        if (auraType == "attraction") {
-                          thisBarrel.auraSpecialty = "attraction";
-                          thisBarrel.auraColor = "rgba(87, 85, 163, .3)";
-                          thisBarrel.auraOutline = "rgba(75, 73, 143)";
-                          if (gadget.hasOwnProperty("alpha")) {
-                            thisBarrel.auraColor =
-                              "rgba(87, 85, 163, " + gadget.alpha + ")";
-                            thisBarrel.auraOutline =
-                              "rgba(75, 73, 143, " + gadget.alpha + ")";
-                          }
-                        } else if (auraType == "repulsion") {
-                          thisBarrel.auraSpecialty = "repulsion";
-                          thisBarrel.auraColor = "rgba(255,228,107,.3)";
-                          thisBarrel.auraOutline = "rgba(225,198,77,.3)";
-                          if (gadget.hasOwnProperty("alpha")) {
-                            thisBarrel.auraColor =
-                              "rgba(255,228,107, " + gadget.alpha + ")";
-                            thisBarrel.auraOutline =
-                              "rgba(225,198,77, " + gadget.alpha + ")";
-                          }
-                        } else if (auraType == "heal") {
-                          thisBarrel.auraSpecialty = "heal";
-                          thisBarrel.auraColor = "rgba(56,183,100,.15)";
-                          thisBarrel.auraOutline = "rgba(26,153,70,.15)";
-                          if (gadget.hasOwnProperty("alpha")) {
-                            thisBarrel.auraColor =
-                              "rgba(56,183,100, " + gadget.alpha + ")";
-                            thisBarrel.auraOutline =
-                              "rgba(26,153,70, " + gadget.alpha + ")";
-                          }
-                          if (gadget.hasOwnProperty("healPower")) {
-                            thisBarrel.healPower = gadget.healPower;
-                          }
-                        } else {
-                          thisBarrel.auraColor = "rgba(255,0,0,.15)";
-                          thisBarrel.auraOutline = "rgba(255,0,0,.15)";
-                          if (gadget.hasOwnProperty("alpha")) {
-                            thisBarrel.auraColor =
-                              "rgba(255,0,0, " + gadget.alpha + ")";
-                            thisBarrel.auraOutline =
-                              "rgba(255,0,0, " + gadget.alpha + ")";
-                          }
-                        }
-                        if (gadget.auraColor) {
-                          thisBarrel.auraColor = gadget.auraColor;
-                          thisBarrel.auraOutline = gadget.auraColor;
-                        }
-                      }
-                      if (gadget.hasOwnProperty("knockback")) {
-                        thisBarrel.knockback = gadget.knockback;
-                      }
-                      if (gadget.hasOwnProperty("growth")) {
-                        thisBarrel.growth = gadget.growth;
-                      }
-                    }
-                  }
-                  //layers aka assets
-                  thisplayer.assets = {};
-                  for (const layer of playerdata.layers) {
-                    let barrelID = Math.random();
-                    let color = "#383838";
-                    if (layer.hasOwnProperty("color")) {
-                      //scenexe does not support this, only rocketer exported tank codes do!
-                      color = layer.color;
-                    }
-                    let outline = "black";
-                    if (layer.hasOwnProperty("outline")) {
-                      //scenexe does not support this, only rocketer exported tank codes do!
-                      outline = layer.outline;
-                    }
-                    let type = "under";
-                    if (layer.hasOwnProperty("type")) {
-                      //scenexe does not support this, only rocketer exported tank codes do!
-                      type = layer.type;
-                    }
-                    let outlinewidth = 5;
-                    if (layer.hasOwnProperty("outlinewidth")) {
-                      //scenexe does not support this, only rocketer exported tank codes do!
-                      outlinewidth = layer.outlinewidth;
-                    }
-                    if (layer.size < 0) {
-                      layer.size = 0;
-                    }
-                    thisplayer.assets[barrelID] = {
-                      type: type,
-                      sides: layer.sides,
-                      color: color,
-                      outline: outline,
-                      outlineThickness: outlinewidth,
-                      size: layer.size, //in comparison to the player's width
-                      angle: layer.rot,
-                      x: layer.offsetX,
-                      y: layer.offsetY,
-                    };
-                  }
-                }
-              }
-              if (playerdata.type == "weapon" || playerdata.type == "full") {
-                if (playerdata.barrels.length > 200) {
-                  var packet = JSON.stringify([
-                    "newNotification",
-                    "Too many barrels! Your barrels will not be imported.",
-                    "red",
-                  ]);
-                  client.send(packet);
-                } else {
-                  thisplayer.barrels = {}; //reset barrels
-                  for (const barrel of playerdata.barrels) {
-                    let bulletLifetime = 50;
-                    if (barrel.lifetime) {
-                      bulletLifetime = barrel.lifetime * 30; //rough conversion
-                    }
-                    let bulletRecoil = 0.75;
-                    if (barrel.recoil) {
-                      bulletRecoil = barrel.recoil;
-                    }
-                    //figure out what barrel type
-                    let barType = "bullet";
-                    if (barrel.type == 0) {
-                      //cannon
-                    } else if (barrel.type == 1) {
-                      //drone
-                      barType = "drone";
-                    } else if (barrel.type == 2) {
-                      //trap
-                      barType = "trap";
-                    } else if (barrel.type == 3) {
-                      //minion i think
-                      barType = "minion";
-                    } else if (barrel.type == 4) {
-                      //player spawner
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Player spawners are not supported.",
-                        "red",
-                      ]);
-                      client.send(packet);
-                    } else if (barrel.type == 5) {
-                      //polyp spawner
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Polyp spawners are not supported.",
-                        "red",
-                      ]);
-                      client.send(packet);
-                    } else if (barrel.type == 6) {
-                      //nothing barrel
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Nothing barrels are not supported.",
-                        "red",
-                      ]);
-                      client.send(packet);
-                    } else if (barrel.type == 7) {
-                      //rocket launcher
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Rocket launchers are not supported.",
-                        "red",
-                      ]);
-                      client.send(packet);
-                    } else if (barrel.type == 8) {
-                      //custom trap
-                      //temporarily default to mines
-                      barType = "mine";
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Custom traps are not supported. They will be converted to mine traps.",
-                        "red",
-                      ]);
-                      client.send(packet);
-                    } else if (barrel.type == 9) {
-                      //polygon spawner
-                      var packet = JSON.stringify([
-                        "newNotification",
-                        "Polygon spawners are not supported.",
-                        "red",
-                      ]);
-                      client.send(packet);
-                    }
-                    let barrelID = Math.random();
-                    thisplayer.barrels[barrelID] = {
-                      barrelWidth: thisplayer.width * barrel.width * 2,
-                      barrelHeight: thisplayer.height * barrel.length * 2,
-                      additionalAngle: barrel.rot,
-                      x: thisplayer.width * barrel.offset, //y value in scenexe is barrel.distance
-                      barrelMoveIncrement: 0,
-                      barrelType: barType,
-                      reloadRecover: barrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
-                      bulletHealth: 15, //scenexe does not have bullet health
-                      bulletDamage: barrel.damage, //weaker than should be i think
-                      bulletPenetration: barrel.penetration, //find out conversion later
-                      bulletTimer: bulletLifetime,
-                      bulletSpeed: barrel.speed * 10,
-                      barrelHeightChange: 0,
-                      shootingState: "no",
-                      reload: (barrel.delay * 1000) / 30, //this is smething not customizable in rocketer tank editor (delay before tank starts shooting) (time 1000 to convert from seond to millisecond, then divide by 30 because each game loop is 30ms)
-                      recoil: bulletRecoil,
-                      shooting: "yes",
-                    };
-                    let thisBarrel = thisplayer.barrels[barrelID];
-                    if (barType == "drone") {
-                      thisBarrel.droneLimit = 3;
-                      thisBarrel.droneCount = 0;
-                      thisplayer.mousex = 0;
-                      thisplayer.mousey = 0;
-                    } else if (barType == "trap") {
-                      thisBarrel.trapDistBeforeStop = 10;
-                    } else if (barType == "mine") {
-                      thisBarrel.trapDistBeforeStop = 10;
-                      thisBarrel.haveAI = "yes";
-                      thisBarrel.AIdetectRange = 450;
-                      thisBarrel.barrels = {
-                        barrelOne: {
-                          barrelWidth: 5,
-                          barrelHeight: 12.5,
-                          additionalAngle: 0,
-                          x: 0,
-                          barrelMoveIncrement: 0,
-                          barrelType: "bullet",
-                          reloadRecover: 15,
-                          bulletHealth: 20,
-                          bulletDamage: 0.25,
-                          bulletPenetration: 2,
-                          bulletTimer: 30,
-                          bulletSpeed: 20,
-                          barrelHeightChange: 0,
-                          shootingState: "no",
-                          reload: 0, //must be zero, for the weapon reload, change the reloadRecover property above
-                          recoil: 0.5,
-                        },
-                      };
-                    } else if (barType == "minion") {
-                      let minionImport = barrel.minion;
-                      let minionBarrel = minionImport.barrels; //but rocketer only support minion bullet barrel for now. Add support for other types of barrels, and gadgets and layers for minion too
-                      thisBarrel.droneLimit = 5;
-                      thisBarrel.droneCount = 0;
-                      thisBarrel.minDist = 200;
-                      thisBarrel.bulletTimer = 1000;
-                      thisplayer.mousex = 0;
-                      thisplayer.mousey = 0;
-                      thisBarrel.barrels = {};
-                      for (const thisminionbarrel of minionBarrel) {
-                        let minionBulletSpeed = 15;
-                        if (thisminionbarrel.speed) {
-                          minionBulletSpeed = thisminionbarrel.speed * 10;
-                        }
-                        let minionBulletPenetration = 2;
-                        if (thisminionbarrel.penetration) {
-                          minionBulletPenetration =
-                            thisminionbarrel.penetration;
-                        }
-                        let minionBulletRecoil = 0.75;
-                        if (thisminionbarrel.recoil) {
-                          minionBulletRecoil = thisminionbarrel.recoil;
-                        }
-                        let minionBulletLifetime = 30;
-                        if (thisminionbarrel.lifetime) {
-                          minionBulletLifetime = thisminionbarrel.lifetime;
-                        }
-                        let minionBodyWidth = thisBarrel.barrelWidth / 2;
-                        let barrelID = Math.random();
-                        thisBarrel.barrels[barrelID] = {
-                          barrelWidth:
-                            minionBodyWidth * thisminionbarrel.width * 2,
-                          barrelHeight:
-                            minionBodyWidth * thisminionbarrel.length * 2,
-                          additionalAngle: thisminionbarrel.rot,
-                          x: minionBodyWidth * thisminionbarrel.offset, //y value in scenexe is barrel.distance
-                          barrelMoveIncrement: 0,
-                          barrelType: "bullet",
-                          reloadRecover: thisminionbarrel.reload * 10, //rough approximation of conversion from scenexe reload to rocketer reload
-                          bulletHealth: 15, //scenexe does not have bullet health
-                          bulletDamage: thisminionbarrel.damage, //weaker than should be i think
-                          bulletPenetration: minionBulletPenetration, //find out conversion later
-                          bulletTimer: minionBulletLifetime,
-                          bulletSpeed: minionBulletSpeed,
-                          barrelHeightChange: 0,
-                          shootingState: "no",
-                          reload: thisminionbarrel.delay, //this is smething not customizable in rocketer tank editor (delay before tank starts shooting)
-                          recoil: minionBulletRecoil,
-                        };
-                      }
-                    }
-                    //not supported by scenexe tank codes btw
-                    if (barrel.hasOwnProperty("knockback")) {
-                      thisBarrel.knockback = barrel.knockback;
-                    }
-                    if (barrel.hasOwnProperty("growth")) {
-                      thisBarrel.growth = barrel.growth;
-                    }
-                  }
-                }
-              }
-              //send the tank to the client so the client can create the editing UI
-              var packet = JSON.stringify(["editedTank", thisplayer]);
-              client.send(packet);
-            } catch (err) {
-              //scenexe compress twice when export to make it shorter
-              console.log(err);
-              var packet = JSON.stringify([
-                "newNotification",
-                "An error occured: " + err.toString(),
-                "red",
-              ]);
-              client.send(packet);
-            }
-          }
-        }
               if (message.startsWith("/loadweapon ")) {
                   try {
                     let tank = message.replace("/loadweapon ", "");

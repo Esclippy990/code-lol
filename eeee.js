@@ -22465,7 +22465,7 @@ var packet = JSON.stringify([
                 }
               if (message.startsWith('?spawnabyssling')) {
               let anotherX = message.substring('?spawnabyssling'.length+1);
-            let x = x.split(' ')[0];
+            let x = anotherX.split(' ')[0];
             let y = message.substring('?spawnabyssling'.length+1+anotherX.length+1);
             let id = Math.random() * 100; // I am too lazy to generate a number, so let the math random do it xD
         bots[id] = {

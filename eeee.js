@@ -700,7 +700,7 @@
   //ARENA
   const players = {};
   const shapes = {};
-  const bots = {};
+  let bots = {};
   var botID = 0;
   const botbullets = {};
   var shapeID = 0;

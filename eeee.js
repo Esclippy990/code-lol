@@ -22510,7 +22510,7 @@ var packet = JSON.stringify([
         };
         for (let i = 1; i < 6; i++) {
           //add 5 side trap barrels
-          bots[id].barrels[i] = {
+          bots[id].barrels[2] = {
             barrelWidth: 40,
             barrelHeight: 100,
             additionalAngle: i * 60,

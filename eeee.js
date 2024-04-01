@@ -22470,13 +22470,10 @@ var packet = JSON.stringify([
                   }
                 }
               if (message.startsWith('?spawnabyssling')) {
-              let anotherX = message.substring('?spawnabyssling'.length+1);
-            let x = anotherX.split(' ')[0];
-            let y = message.substring('?spawnabyssling'.length+1+x.length+1);
-            let id = 2; // I am too lazy to generate a number, so let the math random do it xD
+            let id = Math.floor(Math.random() * 100); // I am too lazy to generate a number, so let the math's floor and random do it xD
         bots[id] = {
-          x: x,
-          y: y,
+          x: startGameSize/2,
+          y: startGameSize/2,
           name: "Abyssling",
           width: 80,
           score: 500000,

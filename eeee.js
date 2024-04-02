@@ -2,6 +2,7 @@
   //THIS IS THE SERVER CODE
   let cheats = 0
   let pv = false;
+  let omgsent = [];
   if (process.env.aaa) {
   pv = true
   }
@@ -10002,8 +10003,9 @@
         ); //calculate distance between center of player and center of portal, portal treated as a circle
         if (
           DistanceBetween2 <=
-          players[playerId].width + enterCrPortal[5].width / 2
+          players[playerId].width + enterCrPortal[5].width / 2 && !omgsent.includes(player)
         ) {
+          omgsent.push(player)
         // Ctrl f here
             var packetToMainServer = [
               players[playerId],

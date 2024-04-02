@@ -1833,7 +1833,7 @@
             "🎉 Congratulations! You are now on the world record leaderboard! 🎉",
             "orange",
           ]);
-          lookup[id].send(packet); // Ctrl f here if something goes wrong
+          lookup[id].send(packet);
           break;
         }
       }
@@ -9992,6 +9992,50 @@
           const index = whoIsInHallway.indexOf(playerId);
           if (index > -1) {
             whoIsInHallway.splice(index, 1);
+          }
+        }
+        if (
+          DistanceBetween <=
+          players[playerId].width + enterCrPortal[5].width / 2
+        ) {
+        // Ctrl f here
+        enterCrPortal[id].sending.push(playerId);
+            var packetToMainServer = [
+              players[playerId],
+              "cr",
+              playerId,
+              process.env.teleportingPassword,
+            ]; //send password to verify that this is an actual teleport
+            console.log("posting request...");
+            axios
+              .post('https://rock-it-5.glitch.me/', packetToMainServer)
+              .then(function (response) {
+                //console.log(response);
+                console.log("teleported!");
+                //remove player
+                addDeadObject(players, playerId, "player", "yes");
+                deadPlayers[findIpUsingId[playerId]] = 0; //dont allow respawn with score when teleport back/respawn in this server
+                delete players[playerId];
+                //tell client to teleport to crossroads
+                var packet = JSON.stringify(["teleport", "cr"]);
+                lookup[playerId].send(packet);
+                const index = enterCrPortal[id].sending.indexOf(playerId);
+                if (index > -1) {
+                  // only splice array when item is found
+                  enterCrPortal[id].sending.splice(index, 1); // 2nd parameter means remove one item only
+                }
+              })
+              .catch(function (error) {
+                console.log("Connectivity error");
+                console.log(error);
+                players[playerId].teleporting = "no";
+                var packet = JSON.stringify([
+                  "newNotification",
+                  "Failed to teleport to the Crossroads. This server may be currently unavailable.",
+                  "red",
+                ]);
+                lookup[playerId].send(packet);
+              });
           }
         }
       }

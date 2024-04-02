@@ -22305,7 +22305,7 @@ var packet = JSON.stringify([
                   dim == "sanc"           ||
                   dim == "2tdm"           ||
                   dim == "4tdm"           ||
-                  dim == "abyssling-home" ||
+                  /*dim == "abyssling-home" ||*/
                   dim == "editor"        // gap
                 ) {
                   let serverURL = "";

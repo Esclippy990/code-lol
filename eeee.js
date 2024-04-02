@@ -2,6 +2,10 @@
   //THIS IS THE SERVER CODE
   let cheats = 0
   let pv = false;
+  let abysshome = process.env.abysshome
+  if (process.env.abysshome) {
+  abysshome = true;
+  }
   let omgsent = [];
   if (process.env.aaa) {
   pv = true
@@ -8936,7 +8940,92 @@
       //this is only sent to players in the players list, so that players who disconnected, died, or in home page will not receive this
     }
   }
-
+  if (process.env.abysshome == true) {
+  botbulletTree.clear();
+    for (const id in botbullets) {
+      botbulletTree.insert({
+        x: botbullets[id].x - botbullets[id].width,
+        y: botbullets[id].y - botbullets[id].width,
+        width: botbullets[id].width * 2,
+        height: botbullets[id].width * 2,
+        id: id,
+      });
+    }
+    botTree.clear();
+    for (const id in bots) {
+      bots[id].hit = 0;
+      botTree.insert({
+        x: bots[id].x - bots[id].width,
+        y: bots[id].y - bots[id].width,
+        width: bots[id].width * 2,
+        height: bots[id].width * 2,
+        id: id,
+      });
+    }
+    setInterval(() => {
+    if (!bots.hasOwnProperty(2)) {
+    let id = 2;
+        bots[id] = {
+          x: startGameSize/2,
+          y: startGameSize/2,
+          name: "Abyssling",
+          width: 80,
+          score: 500000,
+          health: 5000,
+          maxhealth: 5000,
+          damage: 10,
+          speed: 8,
+          hit: 0,
+          attackers: {},
+          fov: 1500,
+          angle: 0,
+          barrels: {
+            barrelOne: {
+              barrelWidth: 64,
+              barrelHeight: 144,
+              additionalAngle: 0,
+              x: 0,
+              barrelMoveIncrement: 0,
+              barrelType: "bullet",
+              reloadRecover: 100, //delay between bullets
+              bulletHealth: 50,
+              bulletDamage: 2,
+              bulletTimer: 40,
+              bulletSpeed: 30,
+              barrelHeightChange: 0,
+              shootingState: "no",
+              reload: 0,
+              recoil: 1,
+            },
+          },
+          shooting: "no",
+          hive: 0,
+          side: 6,
+        };
+        for (let i = 1; i < 6; i++) {
+          //add 5 side trap barrels
+          bots[id].barrels[i] = {
+            barrelWidth: 40,
+            barrelHeight: 100,
+            additionalAngle: i * 60,
+            x: 0,
+            barrelMoveIncrement: 0,
+            barrelType: "trap",
+            trapDistBeforeStop: 15,
+            reloadRecover: 45, //delay between bullets
+            bulletHealth: 100,
+            bulletDamage: 0.5,
+            bulletTimer: 100,
+            bulletSpeed: 10,
+            barrelHeightChange: 0,
+            shootingState: "no",
+            reload: 0,
+            recoil: 1,
+          };
+        }
+    }
+    }, 1000);
+  } // do here lol
   function gameLoopDune() {
     //this gameloop function keep running in the server if there are people
     //this game loop is for DUNE

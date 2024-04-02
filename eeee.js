@@ -22298,13 +22298,14 @@ var packet = JSON.stringify([
                 let dim = message.replace("?dim ", "");
                 player.chats.shift(); //prevent command from appearing as a chat
                 if (
-                  dim == "arena" ||
-                  dim == "dune"  ||
-                  dim == "cr"    ||
-                  dim == "cavern"||       // A wall of "||" lol
-                  dim == "sanc"  ||
-                  dim == "2tdm"  ||
-                  dim == "4tdm"  ||
+                  dim == "arena"          ||
+                  dim == "dune"           ||
+                  dim == "cr"             ||
+                  dim == "cavern"         ||       // A wall of "||" lol
+                  dim == "sanc"           ||
+                  dim == "2tdm"           ||
+                  dim == "4tdm"           ||
+                  dim == "abyssling-home" ||
                   dim == "editor"        // gap
                 ) {
                   let serverURL = "";
@@ -22324,6 +22325,8 @@ var packet = JSON.stringify([
                     serverURL = 'https://rock-it-2.glitch.me/';
                   } else if (dim == "editor") {
                     serverURL = 'https://rock-it-6.glitch.me/';
+                  } else if (dim == "abyssling-home") {
+                    serverURL = 'https://rock-it-10.glitch.me/';
                   }
                   var packetToMainServer = [
                     player,

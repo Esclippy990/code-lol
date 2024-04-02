@@ -9994,8 +9994,14 @@
             whoIsInHallway.splice(index, 1);
           }
         }
+        var DistanceBetween2 = Math.sqrt(
+          (players[playerId].x - enterCrPortal[5].x) *
+            (players[playerId].x - enterCrPortal[5].x) +
+            (players[playerId].y - enterCrPortal[5].y) *
+              (players[playerId].y - enterCrPortal[5].y),
+        ); //calculate distance between center of player and center of portal, portal treated as a circle
         if (
-          DistanceBetween <=
+          DistanceBetween2 <=
           players[playerId].width + enterCrPortal[5].width / 2
         ) {
         // Ctrl f here

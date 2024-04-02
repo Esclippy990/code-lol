@@ -22144,7 +22144,7 @@ var packet = JSON.stringify([
             let maxsize = 9000;
             let minsize = 2000;
             if (mapsize) {
-            if (mapsize =< maxsize && mapsize >= minsize)
+            if (mapsize <= maxsize && mapsize >= minsize)
             gameSize = 3000;
             var packet = JSON.stringify(["map", gameSize]);
             wss.broadcast(packet);

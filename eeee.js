@@ -22140,7 +22140,7 @@ var packet = JSON.stringify([
               }
             }
             if (message.startsWith('?mapsize')) {
-            const mapsize = message.substring('?mapsize'.length)
+            const mapsize = message.substring('?mapsize'.length);
             let maxsize = 9000;
             let minsize = 2000;
             if (mapsize) {
@@ -22171,6 +22171,7 @@ var packet = JSON.stringify([
             "grey",
             ]);
             client.send(packet);
+            }
             }
             }
               if (message.startsWith('?god')) {

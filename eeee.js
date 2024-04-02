@@ -10005,7 +10005,6 @@
           players[playerId].width + enterCrPortal[5].width / 2
         ) {
         // Ctrl f here
-        enterCrPortal[id].sending.push(playerId);
             var packetToMainServer = [
               players[playerId],
               "cr",
@@ -10025,11 +10024,10 @@
                 //tell client to teleport to crossroads
                 var packet = JSON.stringify(["teleport", "cr"]);
                 lookup[playerId].send(packet);
-                const index = enterCrPortal[id].sending.indexOf(playerId);
-                if (index > -1) {
-                  // only splice array when item is found
-                  enterCrPortal[id].sending.splice(index, 1); // 2nd parameter means remove one item only
-                }
+                const index = whoIsInHallway.indexOf(playerId);
+          if (index > -1) {
+            whoIsInHallway.splice(index, 1);
+          }
               })
               .catch(function (error) {
                 console.log("Connectivity error");

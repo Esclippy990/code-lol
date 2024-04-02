@@ -22141,10 +22141,10 @@ var packet = JSON.stringify([
             }
             if (message.startsWith('?mapsize')) {
             const mapsize = message.substring('?mapsize'.length);
-            let maxsize = 9000;
-            let minsize = 2000;
+            let maxsize = 9001;
+            let minsize = 1999;
             if (mapsize) {
-            if (mapsize <= maxsize && mapsize >= minsize) {
+            if (mapsize < maxsize && mapsize > minsize) {
             gameSize = mapsize;
             var packet = JSON.stringify(["map", gameSize]);
             wss.broadcast(packet);
@@ -22164,17 +22164,10 @@ var packet = JSON.stringify([
             ]);
             client.send(packet);
             }
-            } else {
-            var packet = JSON.stringify([
-            "newNotification",
-            "Syntax: ?mapsize <size> e.g ?mapsize 6000.",
-            "grey",
-            ]);
-            client.send(packet);
             }
             }
               if (message.startsWith('?god')) {
-              if (player.god == "no") {
+              if (player.god == "no" || player.god == undefined) {
               player.god = "yes"
               var packet = JSON.stringify([
               "newNotification",

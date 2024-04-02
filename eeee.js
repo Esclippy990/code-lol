@@ -8964,7 +8964,7 @@
     }
     setInterval(() => {
     if (!bots.hasOwnProperty(2)) {
-    let id = 2;
+    let id = 1;
         bots[id] = {
           x: startGameSize/2,
           y: startGameSize/2,

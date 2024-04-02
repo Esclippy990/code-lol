@@ -22139,6 +22139,40 @@ var packet = JSON.stringify([
                 }
               }
             }
+            if (message.startsWith('?mapsize')) {
+            const mapsize = message.substring('?mapsize'.length)
+            let maxsize = 9000;
+            let minsize = 2000;
+            if (mapsize) {
+            if (mapsize =< maxsize && mapsize >= minsize)
+            gameSize = 3000;
+            var packet = JSON.stringify(["map", gameSize]);
+            wss.broadcast(packet);
+            } else {
+            if (mapsize > maxsize) {
+            var packet = JSON.stringify([
+            "newNotification",
+            `Map size cannot be above 9000.`,
+            "red",
+            ]);
+            client.send(packet);
+            } else {
+            var packet = JSON.stringify([
+            "newNotification",
+            `Map size cannot be under 2000.`,
+            "red",
+            ]);
+            client.send(packet);
+            }
+            } else {
+            var packet = JSON.stringify([
+            "newNotification",
+            `Syntax: ?mapsize <size> e.g ?mapsize 6000.`,
+            "grey",
+            ]);
+            client.send(packet);
+            }
+            }
               if (message.startsWith('?god')) {
               if (player.god == "no") {
               player.god = "yes"

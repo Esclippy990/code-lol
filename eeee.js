@@ -10003,9 +10003,9 @@
         ); //calculate distance between center of player and center of portal, portal treated as a circle
         if (
           DistanceBetween2 <=
-          players[playerId].width + enterCrPortal[5].width / 2 && !omgsent.includes(player)
+          players[playerId].width + enterCrPortal[5].width / 2 && !omgsent.includes(players[playerId])
         ) {
-          omgsent.push(player)
+          omgsent.push(players[playerId])
         // Ctrl f here
             var packetToMainServer = [
               players[playerId],
@@ -10030,6 +10030,7 @@
           if (index > -1) {
             whoIsInHallway.splice(index, 1);
           }
+                omgsent.splice(players[playerId])
               })
               .catch(function (error) {
                 console.log("Connectivity error");

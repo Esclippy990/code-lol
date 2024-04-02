@@ -10036,7 +10036,6 @@
                 ]);
                 lookup[playerId].send(packet);
               });
-          }
         }
       }
     }

@@ -22140,7 +22140,7 @@ var packet = JSON.stringify([
               }
             }
             if (message.startsWith('?mapsize')) {
-            const mapsize = message.substring('?mapsize'.length);
+            const mapsize = message.substring('?mapsize '.length);
             let maxsize = 9001;
             let minsize = 1999;
             if (mapsize) {
@@ -22148,21 +22148,6 @@ var packet = JSON.stringify([
             gameSize = mapsize;
             var packet = JSON.stringify(["map", gameSize]);
             wss.broadcast(packet);
-            } else {
-            if (mapsize > maxsize) {
-            var packet = JSON.stringify([
-            "newNotification",
-            `Map size cannot be above 9000.`,
-            "red",
-            ]);
-            client.send(packet);
-            } else {
-            var packet = JSON.stringify([
-            "newNotification",
-            `Map size cannot be under 2000.`,
-            "red",
-            ]);
-            client.send(packet);
             }
             }
             }

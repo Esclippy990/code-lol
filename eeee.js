@@ -5556,7 +5556,8 @@
                 if (newlocationname == "") {
                   newlocationname = "an unknown location";
                 }
-
+                var packet = JSON.stringify(["teleport", newlocation]);
+                lookup[id].send(packet);
                 var packetToMainServer = [
                   playerlist[id],
                   newlocation,
@@ -5574,8 +5575,8 @@
                     deadPlayers[findIpUsingId[id]] = 0; //dont allow respawn with score when teleport back/respawn in this server
                     delete playerlist[id];
                     //tell client to teleport to dune
-                    var packet = JSON.stringify(["teleport", newlocation]);
-                    lookup[id].send(packet);
+                    //var packet = JSON.stringify(["teleport", newlocation]);
+                    //lookup[id].send(packet);
                   })
                   .catch(function (error) {
                     console.log("Connectivity error");

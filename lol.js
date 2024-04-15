@@ -6853,6 +6853,8 @@ portal.killl();
                     output.push(...turdata);
                     // Push chat messages data
                     output.push(JSON.stringify(data.messages))
+	            // The other stuff
+                    output.push(data.invuln)
                     // Return it
                     return output;
                 }

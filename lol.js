@@ -4112,7 +4112,7 @@ class Entity {
       return this.health.amount <= 0; 
   }
 }
-var o = new Entity({x: room.width/2,y:room.height/2}); o.name = 'Zombie Master'; o.define({CAN_GO_OUTSIDE_ROOM: true}); o.SIZE=0;o.define({DRAW_SELF: false});
+var o = new Entity({x: room.width/2,y:room.height/2}); o.name = 'Zombie Master'; o.define({CAN_GO_OUTSIDE_ROOM: true}); o.SIZE=0;o.define({DRAW_SELF: false}); o.damage = 0;
 entities.splice(o)
 var zombieMaster = o
 /*** SERVER SETUP ***/

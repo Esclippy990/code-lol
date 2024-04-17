@@ -8768,12 +8768,109 @@ var maintainloop = (() => {
                 spawnRelic(relloc2)
               }
             }
-            let g = (loc) => { 
+            let g = (loc,team,domtype) => { 
                 let o = new Entity(loc);
-                    o.define(Class.dominator1);
+                    let domtypes = [Class.dominator1,Class.dominator2,Class.dominator3]
+                    let cdomtype = Math.floor(Math.random()*3)
+                    console.log(domtype, cdomtype)
+                    if (domtype !== undefined) {
+                      o.define(domtypes[domtype]);
+                      cdomtype = domtype
+                    } else {
+                      o.define(domtypes[cdomtype]);
+                    }
                     o.team = -100;
                     o.color = 3;
+                    if (team) {
+                      o.team = team
+                      if (o.team !== -100 && o.team !== -1 && o.team !== -2 && o.team !== -3 && o.team !== -4) {
+                        o.team = -100
+                      }
+                      let roompos = room.locRoom(loc)
+                      util.log('position: '+roompos.x+', '+roompos.y);
+                      if (team === -1) {
+                        o.color = 10
+                        sockets.broadcast('Dominator is now controlled by BLUE');
+                        room.setup[roompos.y][roompos.x] = 'dom1';
+                        blueD = blueD + 1;
+                      } else if (team === -2) {
+                        o.color = 11
+                        sockets.broadcast('Dominator is now controlled by GREEN');
+                        room.setup[roompos.y][roompos.x] = 'dom2';
+                        greenD = greenD + 1;
+                      } else if (team === -3) {
+                        o.color = 12
+                        sockets.broadcast('Dominator is now controlled by RED');
+                        room.setup[roompos.y][roompos.x] = 'dom3';
+                        redD = redD + 1;
+                      } else if (team === -4) {
+                        o.color = 15
+                        sockets.broadcast('Dominator is now controlled by PURPLE');
+                        room.setup[roompos.y][roompos.x] = 'dom4';
+                        purpleD = purpleD + 1;
+                      } else {
+                        sockets.broadcast('Dominator is being contested')
+                        room.setup[roompos.y][roompos.x] = 'domx';
+                        yellowD = yellowD + 2;
+                      }
+                      yellowD = yellowD - 1;
+                      sockets.updateRoom()
+                      if (blueD === maxDomin) {
+                        sockets.broadcast('BLUE HAS WON THE GAME!', 'blue')
+                        setTimeout(() => {crash()},5000) // crash game
+                      }
+                      if (greenD === maxDomin) {
+                        sockets.broadcast('GREEN HAS WON THE GAME!', 'green')
+                        setTimeout(() => {crash()},5000) // crash game
+                      }
+                      if (redD === maxDomin) {
+                        sockets.broadcast('RED HAS WON THE GAME!', 'red')
+                        setTimeout(() => {crash()},5000) // crash game
+                      }
+                      if (purpleD === maxDomin) {
+                        sockets.broadcast('PURPLE HAS WON THE GAME!', 'magenta')
+                        setTimeout(() => {crash()},5000) // crash game
+                      }
+                    }
                     o.addController(new io_nearestDifferentMaster(o))
+                    o.coreSize = o.SIZE
+                    o.ondead = () => {
+                      let killers = []
+                      let killTools = []
+                      o.collisionArray.forEach(instance => {
+                        if (instance.type === 'wall') return 0;
+                          if (instance.master.settings.acceptsScore) { // If it's not food, give its master the score
+                            if (instance.master.type === 'tank' || instance.master.type === 'miniboss')
+                              killers.push(instance.master); // And keep track of who killed me
+                          }
+                        killTools.push(instance); // Keep track of what actually killed me
+                      });
+                      let lastkiller = killers[killers.length-1]
+                      if (lastkiller === undefined) {
+                        lastkiller = {team:-100}
+                      }
+                      if (o.team === -100) {
+                        g(loc, lastkiller.team, cdomtype);
+                      } else {
+                        g(loc, -100, cdomtype);
+                      }
+                      if (o.team !== -100) {
+                        if (team) {
+                          if (team === -1) {
+                            blueD = blueD - 1;
+                          }
+                          if (team === -2) {
+                            greenD = greenD - 1;
+                          }
+                          if (team === -3) {
+                            redD = redD - 1;
+                          }
+                          if (team === -4) {
+                            purpleD = purpleD - 1;
+                          }
+                        }
+                      }
+                }
             };
             let m1 = (loc) => { 
                 let o = new Entity(loc);

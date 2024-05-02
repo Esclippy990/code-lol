@@ -29,6 +29,7 @@ const hshg = require('./lib/hshg');
 // mockups.json convet to definitions.js Test
 const definitiontest = require('./lib/mockuptodef');
 // tokens
+let entities2
 const tokens = require('./lib/tokens');
 let tokenLevels = tokens.tokenlevels
 let tokenexpired = tokens.tokenexpired
@@ -2508,6 +2509,9 @@ const wallsDirtyCheck = (p, r) => { return entitiesToAvoid.some(e => { return Ma
 const grid = new hshg.HSHG();
 var entitiesIdLog = 0;
 var entities = [];
+setInterval(()=>{
+entities2 = entities;
+},0);
 const purgeEntities = () => { entities = entities.filter(e => { return !e.isGhost; }); };
 
 var bringToLife = (() => {

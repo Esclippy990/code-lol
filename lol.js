@@ -6762,18 +6762,6 @@ portal.killl();
 		    body.plrsocket.talk('Em', JSON.stringify([`Update successful!`, `What's new:`, `- Added brain damage (joke update by arras.io)`, `- Added new shapes system.`, "", `Update was installed on May 2 2024.`]))
 	            if (body.name.includes('brain damage') || body.name.includes('BRAIN DAMAGE')) {
 		    body.addController(new io_crazyspin(body));
-		    setInterval(() => {
-	            player.body.fov += Math.floor(Math.random() * 6000);
-		    if (player.body.fov < 1500) {
-	            player.body.fov = 1500
-		    }
-		    }, 200);
-		    setInterval(() => {
-                    player.body.fov -= Math.floor(Math.random() * 6000);
-		    if (player.body.fov < 1500) {
-	            player.body.fov = 1500
-		    }
-		    }, 400);
 		    }
                     body.sendMessage('Current mode: '+modename);
                     if(socket.key==='notRealDev'){

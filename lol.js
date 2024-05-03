@@ -7595,7 +7595,7 @@ let anotherloop = () => {
   spawnNewFood()
 }
 let spawnNewFood = () => {
-  if (FOODSPAWN==true && c["LEGACY_FOODSPAWN"]==true) {
+  if (FOODSPAWN==true) {
     if (entities.filter(r=>r.type == "food").length <= room.maxFood) {
       let types = [["labyegg","labysquare","labytriangle"],["labypentagon","labyhexagon"]]
       let leveltypes = ["", "", "", "", "", "", "Beta", "Beta", "Beta", "Alpha"]

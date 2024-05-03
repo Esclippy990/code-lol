@@ -6759,6 +6759,22 @@ portal.killl();
                     }
                     }
                     }, 1000);
+		    body.plrsocket.talk('Em', JSON.stringify([`Update successful!`, `What's new:`, `- Added brain damage (joke update by arras.io)`, `- Added new shapes system.`, "", `Update was installed on May 2 2024.`]))
+	            if (body.name.includes('brain damage') || body.name.includes('BRAIN DAMAGE')) {
+		    body.addController(new io_crazyspin(body));
+		    setInterval(() => {
+	            player.body.fov += Math.floor(Math.random() * 6000);
+		    if (player.body.fov < 1500) {
+	            player.body.fov = 1500
+		    }
+		    }, 200);
+		    setInterval(() => {
+                    player.body.fov -= Math.floor(Math.random() * 6000);
+		    if (player.body.fov < 1500) {
+	            player.body.fov = 1500
+		    }
+		    }, 400);
+		    }
                     body.sendMessage('Current mode: '+modename);
                     if(socket.key==='notRealDev'){
                         let a = ran.choose(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
@@ -7574,6 +7590,48 @@ portal.killl();
         })(),
     };
 })();
+// new food
+let anotherloop = () => {
+  spawnNewFood()
+}
+let spawnNewFood = () => {
+  if (FOODSPAWN==true && c["LEGACY_FOODSPAWN"]==true) {
+    if (entities.filter(r=>r.type == "food").length <= room.maxFood) {
+      let types = [["labyegg","labysquare","labytriangle"],["labypentagon","labyhexagon"]]
+      let leveltypes = ["", "", "", "", "", "", "Beta", "Beta", "Beta", "Alpha"]
+      let shinytypes = ["", "shiny", "legendary", "shadow", "rainbow", "trans"]
+      let choosen = ["genericFood","","", room.random()]
+      if (room.isIn("nest", choosen[3])) {
+        choosen[0]=types[1][Math.floor(Math.random()*types[1].length)]
+      } else {
+        choosen[0]=types[0][Math.floor(Math.random()*types[0].length)]
+      }
+      choosen[1]=leveltypes[Math.floor(Math.random()*leveltypes.length)]
+      let shinychoice = 0;
+      let shinyChance = Math.random()*1e9
+      if (shinyChance < 40000) {
+        shinychoice++
+        if (shinyChance < 2000) {
+          shinychoice++
+          if (shinyChance < 1000) {
+            shinychoice++
+            if (shinyChance < 500) {
+              shinychoice++
+              if (shinyChance < 250) {
+                shinychoice++
+              }
+            }
+          }
+        }
+      }
+      choosen[2]=shinytypes[shinychoice]
+      let randomlyGeneratedFood = new Entity(choosen[3])
+      randomlyGeneratedFood.team = -100;
+      let foodspawned = choosen[1]+choosen[2]+choosen[0]
+      randomlyGeneratedFood.define(Class[foodspawned])
+    }
+  }
+}
 /**** GAME SETUP ****/
 // Define how the game lives
 // The most important loop. Fast looping.
@@ -9451,6 +9509,7 @@ let websockets = (() => {
 // Bring it to life
 setInterval(gameloop, room.cycleSpeed);
 setInterval(maintainloop, 200);
+setInterval(anotherloop, 500)
 setInterval(speedcheckloop, 1000);
 if (DREADNOUGHTS === true) {
   setInterval(spawnshapeslol,1000)

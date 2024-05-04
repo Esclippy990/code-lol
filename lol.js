@@ -355,6 +355,8 @@ if (NOCRASHERS === undefined) {
   util.log(arrasmaze['createMaze'](MAZETYPE))
 }*/
 let roomsetup = c['ROOM_SETUP'+randommode]
+let edgesetup = c['EDGE_SETUP'+randommode]
+if (edgesetup == undefined) edgesetup = [];
 let realmode = c['MODE'+randommode]
 if (DOMINATION === true) {
   if (realmode === "tdm") {
@@ -405,11 +407,12 @@ let gamemodecode = gamemodecodeoriginal
 if (randommode === 21) {
   gamemodecode = 'w35trains4wars'
 }
-const room = {
+let room = {
     lastCycle: undefined,
     cycleSpeed: 1000 / roomSpeed / 30,
     width: width2,
     height: height2,
+    edge_setup: edgesetup,
     setup: roomsetup,
     wallxgrid: MAZEX_GRID,
     wallygrid: MAZEY_GRID,
@@ -3653,18 +3656,35 @@ class Entity {
           nullVector(this.accel); nullVector(this.velocity);
           return 0;
       }
-      if (!this.settings.canGoOutsideRoom && (this.type !== "miniboss" || this.type !== "spectator")) {
-        this.accel.x -= Math.min(this.x - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-        this.accel.x -= Math.max(this.x + this.realSize - room.width - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-        this.accel.y -= Math.min(this.y - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-        this.accel.y -= Math.max(this.y + this.realSize - room.height - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-      }
-      /*if (room.isIn('edge', { x: this.x, y: this.y, })) {
-          this.accel.x -= Math.min(this.x - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-          this.accel.x -= Math.max(this.x + this.realSize - room.width - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-          this.accel.y -= Math.min(this.y - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-          this.accel.y -= Math.max(this.y + this.realSize - room.height - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
-      }*/
+      if (!this.settings.canGoOutsideRoom && (this.type !== "miniboss" && this.type !== "spectator")) {
+          if (room.edge_setup.length == 0) {
+            this.accel.x -= Math.min(this.x - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.x -= Math.max(this.x + this.realSize - room.width - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.y -= Math.min(this.y - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.y -= Math.max(this.y + this.realSize - room.height - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+          } else {
+            this.accel.x -= Math.min(this.x - this.realSize - room.edge_setup[0].x + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.x -= Math.max(this.x + this.realSize - room.edge_setup[0].x - room.edge_setup[0].width - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.y -= Math.min(this.y - this.realSize + room.edge_setup[0].y + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.y -= Math.max(this.y + this.realSize + room.edge_setup[0].y- room.edge_setup[0].height - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            room.edge_setup[1].forEach(edge=>{
+              let x = edge.do_x, y = edge.do_y
+              if (x == true) if (this.x >= edge.x+ 50 && this.x <= edge.x+edge.width - 50) x = false;
+              if (y == true) if (this.y >= edge.y+ 50 && this.x <= edge.y+edge.height - 50) y = false;
+              if (x == false && y == false) {
+                if (edge.do_x) {if (this.x >= edge.x+edge.width/2) this.accel.x -= Math.min(this.x - this.realSize - edge.x - edge.width + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed; else this.accel.x -= Math.max(this.x + this.realSize - edge.x - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed};
+                if (edge.do_y) {if (this.y >= edge.y+edge.height/2) this.accel.y -= Math.min(this.y - this.realSize - edge.y - edge.height + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed; else this.accel.y -= Math.max(this.y + this.realSize - edge.y - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed};
+              }
+            });
+          }
+        }
+      if (room.isIn('edge', { x: this.x, y: this.y, }) && !this.settings.canGoOutsideRoom && (this.type !== "miniboss" && this.type !== "spectator") && room.edge_setup.length == 0) {
+            let center = room.locRoomCenter({ x: this.x, y: this.y, });
+            this.accel.x += (this.x-center.x)* c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.y += (this.y-center.y)* c.ROOM_BOUND_FORCE / roomSpeed;
+            //console.log((this.x-center.x)* c.ROOM_BOUND_FORCE / roomSpeed, (this.y-center.y)* c.ROOM_BOUND_FORCE / roomSpeed);
+            //this.accel.x -= * c.ROOM_BOUND_FORCE / roomSpeed;room.width/room.xgrid/2
+        }
       if (room.gameMode === 'tdm' && this.team !== -100 && this.team !== -101) { 
           let loc = { x: this.x, y: this.y, };
           if (

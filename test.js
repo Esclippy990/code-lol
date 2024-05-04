@@ -515,7 +515,6 @@ exports.labytriangle = {
         HEALTH: 3 * basePolygonHealth,
         PENETRATION: 1.5,
     },
-    CAN_GROW: false,
     VARIES_IN_SIZE: false,
     DRAW_HEALTH: true,
 };
@@ -587,30 +586,9 @@ exports.labyegg = {
     VARIES_IN_SIZE: false,
     DRAW_HEALTH: true,
 };
-let makeLabyShape = (labyshape,level, shinylevel) => {
-  if (shinylevel !== "laby") {
-    if (!exports[shinylevel+labyshape]) {
-        exports[shinylevel+labyshape] = JSON.parse(JSON.stringify(exports[labyshape]))
-        exports[shinylevel+labyshape].GIVE_KILL_MESSAGE = true;
-        switch (shinylevel) {
-            case "shiny": exports[shinylevel+labyshape].COLOR = 1; exports[shinylevel+labyshape].VALUE *= 100; exports[shinylevel+labyshape].BODY.HEALTH *= 2; exports[shinylevel+labyshape].LABEL = "Shiny "+exports[shinylevel+labyshape].LABEL;
-            break;
-            case "legendary": exports[shinylevel+labyshape].COLOR = 0; exports[shinylevel+labyshape].VALUE *= 250; exports[shinylevel+labyshape].BODY.HEALTH *= 5; exports[shinylevel+labyshape].LABEL = "Legendary "+exports[shinylevel+labyshape].LABEL;
-            break;
-            case "shadow": exports[shinylevel+labyshape].COLOR = 9; exports[shinylevel+labyshape].ALPHA = 0.2; exports[shinylevel+labyshape].VALUE *= 300; exports[shinylevel+labyshape].BODY.HEALTH *= 10; exports[shinylevel+labyshape].LABEL = "Shadow "+exports[shinylevel+labyshape].LABEL;
-            break;
-            case "rainbow": exports[shinylevel+labyshape].COLOR = 36; exports[shinylevel+labyshape].VALUE *= 400; exports[shinylevel+labyshape].BODY.HEALTH *= 25; exports[shinylevel+labyshape].LABEL = "Rainbow "+exports[shinylevel+labyshape].LABEL;
-            break;
-            case "trans": exports[shinylevel+labyshape].COLOR = 37; exports[shinylevel+labyshape].VALUE *= 500; exports[shinylevel+labyshape].BODY.HEALTH *= 50; exports[shinylevel+labyshape].LABEL = "Trans "+exports[shinylevel+labyshape].LABEL;
-        }
-    }
-    labyshape = shinylevel+labyshape
-  }
+let makeLabyShape = (labyshape,level) => {
   let label = "Beta"
   let previouslabel = [labyshape,labyshape,labyshape,labyshape,labyshape]
-  if (level > 1) {
-    killmsg = true
-  }
   if (level === 2) {
     previouslabel[1] = "Beta"+labyshape
     label = "Alpha"
@@ -628,28 +606,30 @@ let makeLabyShape = (labyshape,level, shinylevel) => {
     label = "Super"
   }
   let givekill = false
-  if (level>1) {
-    givekill = true
+  if (exports[labyshape].GIVE_KILL_MESSAGE) {
+    givekill = exports[labyshape].GIVE_KILL_MESSAGE
+    if (level>1) {
+      givekill = true
+    }
   }
   let usableSHAPE = Math.max(exports[labyshape].SHAPE, 3),
-        downscale = Math.cos(Math.PI / usableSHAPE);
+        downscale = Math.cos(Math.PI / usableSHAPE),
+        strenghtMultiplier = 5 ** (level - 1);
   exports[label+labyshape] = {
     PARENT: [exports.food],
-    VALUE: exports[previouslabel[level-1]].VALUE * ((level+1)*level*level),
+    LABEL: label+' '+exports[labyshape].LABEL,
+    VALUE: exports[previouslabel[level-1]].VALUE * (level*level),
     SHAPE: exports[labyshape].SHAPE,
-    SIZE: exports[previouslabel[level-1]].SIZE * ((level+3.5)/4)+4-exports[labyshape].SHAPE/1.5,
+    SIZE: exports[previouslabel[level-1]].SIZE / downscale,
     COLOR: exports[labyshape].COLOR,
-    GIVE_KILL_MESSAGE: givekill,
-    CAN_GROW: false,
     BODY: {
-      DAMAGE: exports[labyshape].BODY.DAMAGE * (level*level+1),
-      DENSITY: exports[labyshape].BODY.DENSITY * (level*level+1),
-      HEALTH: exports[labyshape].BODY.HEALTH * (level*level*level+1),
+      DAMAGE: exports[labyshape].BODY.DAMAGE * (level+1),
+      DENSITY: exports[labyshape].BODY.DENSITY * (level+1),
+      HEALTH: exports[labyshape].BODY.HEALTH * (level+1),
     },
     TURRETS: [{
             POSITION: [20 * downscale ** 1, 0, 0,180 / usableSHAPE, 0, 1],
-            TYPE: [exports[previouslabel[level-1]], {INDEPENDENT: true, CAN_GO_THROUGH_ROOM: true, TYPE: "unknown", COLOR: -1}],
-            MOTIONTYPE: ["instant", "bound"]
+            TYPE: [exports[previouslabel[level-1]], {INDEPENDENT: true, CAN_GO_THROUGH_ROOM: true, TYPE: "unknown"}]
         }],
     /*TURRETS: [{
                 POSITION: [  20/Math.PI*(2+(0.0625*exports[labyshape].SHAPE)),     0,      0,      180/exports[labyshape].SHAPE,     360,  1], 
@@ -659,34 +639,31 @@ let makeLabyShape = (labyshape,level, shinylevel) => {
     VARIES_IN_SIZE: false,
     DRAW_HEALTH: exports[labyshape].DRAW_HEALTH,
   }
-  if (exports[label+labyshape].SHAPE == 4) {
-    exports[label+labyshape].SIZE = exports[previouslabel[level-1]].SIZE * ((level+3.5)/4)+3;
-  }
-  let shinylabel = ""
-  switch (shinylevel) {
-    case "shiny": shinylabel = "Shiny "+label;
-    break;
-    case "legendary": shinylabel = "Legendary "+label;
-    break;
-    case "shadow": shinylabel = "Shadow "+label; exports[label+labyshape].ALPHA = 0.2;
-    break;
-    case "rainbow": shinylabel = "Rainbow "+label;
-    break;
-    case "trans": shinylabel = "Trans "+label;
-  }
-  if (shinylabel !== "") {
-    exports[label+labyshape].LABEL = shinylabel+' '+exports[labyshape].LABEL;
-    exports[label+labyshape].GIVE_KILL_MESSAGE = true;
-  } else {
-    exports[label+labyshape].LABEL = label+' '+exports[labyshape].LABEL;
-  }
 }
-let makelabyshapes = [["labyegg","labysquare", "labytriangle", "labypentagon", "labyhexagon"],["laby", "shiny", "legendary", "shadow", "rainbow", "trans"]]
-makelabyshapes[1].forEach((shinyLevel)=>{
-    makelabyshapes[0].forEach((foodtype)=>{
-        for (let i = 1; i<5; i++) makeLabyShape(foodtype,i,shinyLevel);
-    })
-})
+makeLabyShape("labyegg",1)
+makeLabyShape("labyegg",2)
+makeLabyShape("labyegg",3)
+makeLabyShape("labyegg",4)
+
+makeLabyShape("labysquare",1)
+makeLabyShape("labysquare",2)
+makeLabyShape("labysquare",3)
+makeLabyShape("labysquare",4)
+
+makeLabyShape("labytriangle",1)
+makeLabyShape("labytriangle",2)
+makeLabyShape("labytriangle",3)
+makeLabyShape("labytriangle",4)
+
+makeLabyShape("labypentagon",1)
+makeLabyShape("labypentagon",2)
+makeLabyShape("labypentagon",3)
+makeLabyShape("labypentagon",4)
+
+makeLabyShape("labyhexagon",1)
+makeLabyShape("labyhexagon",2)
+makeLabyShape("labyhexagon",3)
+makeLabyShape("labyhexagon",4)
 exports.woomygreensquare = {
     PARENT: [exports.food],
     LABEL: 'Square',

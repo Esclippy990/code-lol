@@ -6779,7 +6779,7 @@ portal.killl();
                     }
                     }
                     }, 1000);
-		    body.plrsocket.talk('Em', JSON.stringify([`Update successful!`, `What's new:`, `- Added brain damage (joke update by arras.io)`, `- Added new shapes system.`, "", `Update was installed on May 2 2024.`]))
+		    body.plrsocket.talk('Em', JSON.stringify([`Update successful!`, `What's new:`, `- Added brain damage (joke update by arras.io)`, `- Added new shapes system.`, `- Fixed custom edges which used to seperate rooms.` "", `Update was installed on May 2 2024.`]))
 	            if (body.name.includes('brain damage') || body.name.includes('BRAIN DAMAGE')) {
 		    body.addController(new io_crazyspin(body));
 		    }

@@ -2374,148 +2374,72 @@ class Gun {
         o.coreSize = o.SIZE;
     }
 
-    bulletInit(o, extra) {
-        // Define it by its natural properties
-        this.bulletTypes.forEach(type => {o.define(type); this.body.lastbullettype = type; if (extra) {
-          if (extra[0] == 1) {
-            o.define(ClassId[extra[1]])
-            o.define(Class.genericSunchip)
-            o.index = extra[1]
+    bulletInit(o) {
+      // Define it by its natural properties
+      this.bulletTypes.forEach(type => {o.define(type);this.body.lastbullettype = type;});
+      this.body.master.lastbullet = o; //last bullet is for the tanks like bacteria
+      // Pass the gun attributes
+      o.define({ 
+          BODY: this.interpret(), 
+          SKILL: this.getSkillRaw(),
+          SIZE: this.body.size * this.width * this.settings.size / 2 ,
+          LABEL: this.master.label + ((this.label) ? ' ' + this.label : '') + ' ' + o.label,
+      });            
+      o.color = this.body.master.color;
+      // Keep track of it and give it the function it needs to deutil.log itself upon death
+      if (this.countsOwnKids) {
+          o.parent = this;
+          this.children.push(o);
+      } else if (this.body.maxChildren) {
+          o.parent = this.body;
+          this.body.children.push(o);
+          this.children.push(o);  
+      } else {
+          o.bulletparent = this.body.master;
+          this.body.master.bulletchildren.push(o);
+      }        
+      o.source = this.body;
+      o.gunsource = this;
+      o.facing = o.velocity.direction;
+      // Necromancers.
+      let oo = o;
+      o.necro = host => {
+          let shootPermission = (this.countsOwnKids) ?
+              this.countsOwnKids > this.children.length * 
+              ((this.bulletStats === 'master') ? this.body.skill.rld : this.bulletStats.rld)
+          : (this.body.maxChildren) ?
+              this.body.maxChildren > this.body.children.length * 
+              ((this.bulletStats === 'master') ? this.body.skill.rld : this.bulletStats.rld)
+          : true;   
+          if (shootPermission) {
+              let save = {
+                  facing: host.facing,
+                  size: host.SIZE,
+              };
+              host.define(Class.genericEntity);
+              this.bulletInit(host);
+              host.team = oo.master.master.team;
+              host.master = oo.master;
+              host.color = oo.color;
+              host.facing = save.facing;
+              host.SIZE = save.size;
+              host.health.amount = host.health.max;
+              return true;
           }
-        }});
-        this.body.master.lastbullet = o; //last bullet is for the tanks like bacteria
-        // Pass the gun attributes
-        o.define({ 
-            BODY: this.interpret(), 
-            SKILL: this.getSkillRaw(),
-            SIZE: this.body.size * this.width * this.settings.size / 2 ,
-            LABEL: this.master.label + ((this.label) ? ' ' + this.label : '') + ' ' + o.label,
-        });            
-        o.color = this.body.master.color;
-        // Keep track of it and give it the function it needs to deutil.log itself upon death
-        if (this.countsOwnKids) {
-            o.parent = this;
-            this.children.push(o);
-        } else if (this.body.maxChildren) {
-            o.parent = this.body;
-            this.body.children.push(o);
-            this.children.push(o);  
-        } else {
-            o.bulletparent = this.body;
-            this.body.bulletchildren.push(o);
-            if (this.body !== this.body.master) {
-              this.body.master.bulletchildren.push(o);
-            }
-        }        
-        o.source = this.body;
-        o.gunsource = this;
-        o.facing = o.velocity.direction;
-        // Necromancers.
-        let oo = o;
-        o.necro = host => {
-            let shootPermission = (this.countsOwnKids) ?
-                this.countsOwnKids > this.children.length * 
-                ((this.bulletStats === 'master') ? this.body.skill.rld : this.bulletStats.rld)
-            : (this.body.maxChildren) ?
-                this.body.maxChildren > this.body.children.length * 
-                ((this.bulletStats === 'master') ? this.body.skill.rld : this.bulletStats.rld)
-            : true;   
-            if (shootPermission) {
-                let save = {
-                    facing: host.facing,
-                    size: host.SIZE,
-                    index: host.index,
-                };
-                let definething = []
-                if ( host.turrets.length !== 0 || host.guns.length !==0) {
-                  definething = [1,save.index]
-                }
-                host.define(Class.genericEntity);
-                this.bulletInit(host, definething);
-                host.team = oo.master.master.team;
-                host.master = oo.master;
-                host.color = oo.color;
-                host.facing = save.facing;
-                host.SIZE = save.size;
-                host.health.amount = host.health.max;
-                return true;
-            }
-            return false;
-        };
-        // Bullet Custom Stats
-        if (this.bulletsize !== undefined) {
-          o.coreSize = this.bulletsize
-          o.SIZE = this.bulletsize*(this.body.SIZE/12)
-        }
-        if (this.bulletcolor !== undefined) {
-          o.color = this.bulletcolor
-        }
-        // Otherwise
-        o.refreshBodyAttributes();
-        o.life();
-    }
-
-    getTracking() {
-        return {
-            speed: c.runSpeed * ((this.bulletStats == 'master') ? this.body.skill.spd : this.bulletStats.spd) * 
-                this.settings.maxSpeed * 
-                this.natural.SPEED,
-            range:  Math.sqrt((this.bulletStats == 'master') ? this.body.skill.spd : this.bulletStats.spd) * 
-                this.settings.range * 
-                this.natural.RANGE,
-        };
-    }
-
-    interpret() {
-        let sizeFactor = this.master.size/this.master.SIZE;
-        let shoot = this.settings;
-        let sk = (this.bulletStats == 'master') ? this.body.skill : this.bulletStats;
-        // Defaults
-        let out = {
-            SPEED: shoot.maxSpeed * sk.spd,
-            HEALTH: shoot.health * sk.str,
-            RESIST: shoot.resist + sk.rst,
-            DAMAGE: shoot.damage * sk.dam,
-            PENETRATION: Math.max(1, shoot.pen * sk.pen),            
-            RANGE: shoot.range / Math.sqrt(sk.spd),
-            DENSITY: shoot.density * sk.pen * sk.pen / sizeFactor,
-            PUSHABILITY: 1 / sk.pen,
-            HETERO: 3 - 2.8 * sk.ghost,
-        };
-        // Special cases
-        switch (this.calculator) {
-        case 'thruster': 
-            this.trueRecoil = this.settings.recoil * Math.sqrt(sk.rld * sk.spd);
-            break;
-        case 'sustained':
-            out.RANGE = shoot.range;
-            break;
-        case 'swarm':
-            out.PENETRATION = Math.max(1, shoot.pen * (0.5 * (sk.pen - 1) + 1));
-            out.HEALTH /= shoot.pen * sk.pen;
-            break;
-        case 'trap':
-        case 'block':
-            out.PUSHABILITY = 1 / Math.pow(sk.pen, 0.5);    
-            out.RANGE = shoot.range;
-            break;
-        case 'necro':
-        case 'drone':
-            out.PUSHABILITY = 1;
-            out.PENETRATION = Math.max(1, shoot.pen * (0.5 * (sk.pen - 1) + 1));
-            out.HEALTH = (shoot.health * sk.str + sizeFactor) / Math.pow(sk.pen, 0.8);
-            out.DAMAGE = shoot.damage * sk.dam * Math.sqrt(sizeFactor) * shoot.pen * sk.pen;
-            out.RANGE = shoot.range * Math.sqrt(sizeFactor);
-            break;
-        }
-        // Go through and make sure we respect its natural properties
-        for (let property in out) { 
-            if (this.natural[property] == null || !out.hasOwnProperty(property)) continue;
-            out[property] *= this.natural[property];
-        }
-        return out;
-    }
-}
+          return false;
+      };
+      // Bullet Custom Stats
+      if (this.bulletsize !== undefined) {
+        o.coreSize = this.bulletsize
+        o.SIZE = this.bulletsize*(this.body.SIZE/12)
+      }
+      if (this.bulletcolor !== undefined) {
+        o.color = this.bulletcolor
+      }
+      // Otherwise
+      o.refreshBodyAttributes();
+      o.life();
+  }
 
 
     getTracking() {
@@ -6855,7 +6779,10 @@ portal.killl();
                     }
                     }
                     }, 1000);
-		    body.plrsocket.talk('Em', JSON.stringify([`Update successful!`, `What's new:`, `- Added brain damage (joke update by arras.io)`, `- Added new shapes system.`, `- Fixed custom edges which used to seperate rooms.`, "", `Update was installed on May 2 2024.`]))
+                    if (body.plrsocket.noticed == undefined) {
+		    body.plrsocket.noticed = true;
+        body.plrsocket.talk('m', 'The server has currently went through a remake fully, because something broke. If you find any bugs which need to get fixed, please tell it in the chat instantly!', 'red')
+                    }
 	            if (body.name.includes('brain damage') || body.name.includes('BRAIN DAMAGE')) {
 		    body.addController(new io_crazyspin(body));
 		    }

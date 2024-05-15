@@ -1914,32 +1914,6 @@ exports.beemantrap = {
             RANGE: 120,
         },
     };
-
-        FACING_TYPE: 'smoothToTarget',
-        CONTROLLERS: [
-            'nearestDifferentMaster',
-            'canRepel',
-            'mapTargetToGoal',
-            'hangOutNearMaster'
-        ],
-        BODY: {
-            PENETRATION: 1.2,
-            PUSHABILITY: 0.6,
-            ACCELERATION: 0.05,
-            HEALTH: 0.6 * wepHealthFactor,
-            DAMAGE: 1.25 * wepDamageFactor,
-            SPEED: 3.8,
-            RANGE: 200,
-            DENSITY: 0.03,
-            RESIST: 1.5,
-            FOV: 0.8,
-        },
-        AI: { BLIND: true, },
-        HITS_OWN_TYPE: 'hard',
-        DRAW_HEALTH: false,
-        CLEAR_ON_MASTER_UPGRADE: true,
-        BUFF_VS_FOOD: true,
-    };
 exports.genericSunchip = {
     PARENT: [exports.genericDrone],
     NECRO: true,

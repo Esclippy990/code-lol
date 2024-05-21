@@ -1408,6 +1408,94 @@ class io_magnetize extends IO {
       }
     }
 }
+class io_magnetize2 extends IO {
+    constructor(body) {
+        super(body);
+        this.countdown = 5;
+    }
+
+    think() {
+        if (this.countdown) {
+            this.myGoal = {
+              x: this.body.control.goal.x,
+              y: this.body.control.goal.y,
+            };
+            let toMagnetize = nearestRadius(entities,120,{x:this.body.x, y:this.body.y})
+            let nearestmagnet = nearestCheck(toMagnetize,{x:this.body.x, y:this.body.y},"IS_MAGNET")
+            let ismagnetized = false
+            if (nearestmagnet !== null && nearestmagnet !== undefined) {
+              ismagnetized = true;
+              this.myGoal = {
+                x: nearestmagnet.x,
+                y: nearestmagnet.y,
+              };
+            }
+            let controlObj = this.body.control
+            controlObj.goal = this.myGoal
+            if (ismagnetized === true) {
+              if (this.body.plrsocket !== 0) {
+                this.player = this.body.plrsocket.player
+                let goal1 = {}
+                this.body.autoOverride = this.player.command.override;
+                goal1 = {
+                  x: controlObj.goal.x + this.player.command.right - this.player.command.left,
+                  y: controlObj.goal.y + this.player.command.down - this.player.command.up,
+                }        
+                if (this.player.body && this.player.body.type === "dominator") {
+                  goal1 = {
+                    x: this.body.x,
+                    y: this.body.y,
+                  }
+                }
+                let targ = {
+                  x: this.player.target.x,
+                  y: this.player.target.y,
+                 };
+                if (this.player.command.autospin) {
+                  let kk = Math.atan2(this.body.control.target.y, this.body.control.target.x) + 0.02;
+                  targ = {
+                    x: 100 * Math.cos(kk),
+                    y: 100 * Math.sin(kk),
+                  };
+                }
+                return {         
+                  target: targ,
+                  goal: goal1,
+                  fire: this.player.command.lmb || this.player.command.autofire,
+                  main: this.player.command.lmb || this.player.command.autospin || this.player.command.autofire,
+                  alt: this.player.command.rmb,
+                };
+              } else {
+                return controlObj
+              }
+            } else {
+              return {
+            }
+        };
+      }
+    }
+}
+class io_magnet2 extends IO {
+    constructor(body) {
+        super(body);
+        this.myGoal = {
+            x: body.master.control.goal.x,
+            y: body.master.control.goal.y,
+        };
+    }
+
+    think(input) {
+          let toMagnetize = nearestRadius(entities,120,{x:this.body.x, y:this.body.y})
+          if (toMagnetize !== null) {
+            toMagnetize.forEach(a=>{
+              if (a.team !== this.body.team && (a.type !== "bullet" && a.type !== "swarm" && a.type !== "trap" && a.type !== "block" && a.type !== "dominator")) {
+                a.addController(new io_magnetize2(a))
+              }
+            })
+          }
+          return {};
+    }
+}
 class io_magnet extends IO {
     constructor(body) {
         super(body);

@@ -6432,6 +6432,12 @@ portal.killl();
                   } else
                   socket.talk('m', content);
                 }
+		    function messengerExp(socket, content, color) {
+                  if (color) {
+                    socket.talk('Em', JSON.stringify(content), color);
+                  } else
+                  socket.talk('Em', JSON.stringify(content));
+                }
                 // The returned player definition function
                 return (socket, name) => {
                     let player = {}, loc = {};

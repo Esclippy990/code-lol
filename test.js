@@ -77,6 +77,7 @@ const g = { // Gun info here
     slowestspeed:       [1,     1,     1,      1,      1,      1,      1,      0.01,   0.01,   1,      1,      1,      1], 
     basicbigger:        [18,    0,     0.1,    5,      1,      0.75,   1,      4.5,    1,      1,      1,      15,     1],
     fastreload:         [2,     1,     0.1,    1,      0.3,    0.2,    1,      15,     1,      0.6,    1,      15,     1],
+    fastreload3:         [10,     1,     0.1,    1,      0.3,    0.2,    1,      15,     1,      0.6,    1,      15,     1],
     fastreload2:        [2,     1,     0.01,   1,      0.3,    0.2,    1,      15,     1,      1,      1,      0.01,   1],
     fastanni:           [0.25,  18,    1,      1,      1,      1,      1,      0.1,    1,      1,      1,      1,      1],
     fastreloaddamage:   [6,     0,     0.1,    1,      1000,   9999,   1,      25,     50,     1.5,      1,      15,     1],
@@ -6977,6 +6978,41 @@ exports.fastpenta = {
                     POSITION: [  22,     8,      1,      0,      0,      0,      0,   ], 
                         PROPERTIES: {
                             SHOOT_SETTINGS: combineStats([g.fastreload]),
+                            TYPE: exports.bullet,
+                        }, },
+                ],
+            };
+exports.oldfastpenta2 = {
+                PARENT: [exports.genericTank],
+                LABEL: 'Old Machine Shot',
+                DANGER: 8,
+                BODY: {
+                    SPEED: base.SPEED * 0.85,
+                },
+                GUNS: [ { /*** LENGTH  WIDTH   ASPECT    X       Y     ANGLE   DELAY */
+                    POSITION: [  16,     8,      1,      0,     -3,    -30,    0.667, ], 
+                        PROPERTIES: {
+                            SHOOT_SETTINGS: combineStats([g.fastreload3]),
+                            TYPE: exports.bullet,
+                        }, }, {
+                    POSITION: [  16,     8,      1,      0,      3,     30,    0.667, ], 
+                        PROPERTIES: {
+                            SHOOT_SETTINGS: combineStats([g.fastreload3]),
+                            TYPE: exports.bullet,
+                        }, }, {
+                    POSITION: [  19,     8,      1,      0,     -2,    -15,    0.333, ], 
+                        PROPERTIES: {
+                            SHOOT_SETTINGS: combineStats([g.fastreload3]),
+                            TYPE: exports.bullet,
+                        }, }, {
+                    POSITION: [  19,     8,      1,      0,      2,     15,    0.333, ], 
+                        PROPERTIES: {
+                            SHOOT_SETTINGS: combineStats([g.fastreload3]),
+                            TYPE: exports.bullet,
+                        }, }, {
+                    POSITION: [  22,     8,      1,      0,      0,      0,      0,   ], 
+                        PROPERTIES: {
+                            SHOOT_SETTINGS: combineStats([g.fastreload3]),
                             TYPE: exports.bullet,
                         }, },
                 ],

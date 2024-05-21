@@ -5331,6 +5331,14 @@ const sockets = (() => {
                              }
                           }}}}
                         } break;
+			case 71: {
+                          let entity = nearest(entities, {x:socket.player.body.x+socket.player.target.x,y:socket.player.body.y+socket.player.target.y});
+                          let name = "an unnamed"
+                          if (entity.name) name = entity.name+"'s"
+                          //this.player.body.sendMessage("Selected "+name+" "+entity.label+" (ID #"+entity.id+"). Score: "+Math.round(entity.skill.score)+"; Build: "+entity.skill.raw[6]+"/"+entity.skill.raw[7]+"/"+entity.skill.raw[4]+"/"+entity.skill.raw[2]+"/"+entity.skill.raw[1]+"/"+entity.skill.raw[3]+"/"+entity.skill.raw[0]+"/"+entity.skill.raw[9]+"/"+entity.skill.raw[8]+"/"+entity.skill.raw[5]+";")
+                          socket.player.body.sendExpMessage(["Selected "+name+" "+entity.label+" (ID #"+entity.id+").", "- Score: "+Math.round(entity.skill.score)+";", "- Build: "+entity.skill.raw[6]+"/"+entity.skill.raw[7]+"/"+entity.skill.raw[4]+"/"+entity.skill.raw[2]+"/"+entity.skill.raw[1]+"/"+entity.skill.raw[3]+"/"+entity.skill.raw[0]+"/"+entity.skill.raw[9]+"/"+entity.skill.raw[8]+"/"+entity.skill.raw[5]+";"])
+                          socket.player.selected = entity
+                        } break;
                         case 67: {
                           if (socket.player.body.settings.leaderboardable === false) {
                             socket.player.body.settings.leaderboardable = true

@@ -6668,6 +6668,7 @@ portal.killl();
                         }                        
                         body.addController(new io_listenToPlayer(body, player)); // Make it listen
                         body.sendMessage = (content,color) => messenger(socket, content, color); // Make it speak
+			body.sendExpMessage = (content,color) => messengerExp(socket, content, color); // Make it speak
                         body.invuln = true; // Make it safe
                     player.body = body;
                     player.body.plrsocket = socket;

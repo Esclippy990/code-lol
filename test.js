@@ -20398,7 +20398,8 @@ exports.nostalgiamenu.UPGRADES_TIER_1 = [
     exports.sniper3,
     exports.weirdspike,
     exports.master2,
-    exports.master
+    exports.master,
+    exports.oldfastpenta2
 ];
 exports.dieptanks.UPGRADES_TIER_1 = [
   exports.diep2tanks

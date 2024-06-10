@@ -1831,21 +1831,90 @@ exports.trap = {
 };
 exports.beemantrap = {
     LABEL: 'Bee Hive',
-    TYPE: 'trap',
-    ACCEPTS_SCORE: false,
-    SHAPE: -10, 
-    MOTION_TYPE: 'glide', // def
-    FACING_TYPE: 'turnWithSpeed',
-    HITS_OWN_TYPE: 'push',
-    DIE_AT_RANGE: true,
-    BODY: {
-        HEALTH: 1 * wepHealthFactor,
-        DAMAGE: 2 * wepDamageFactor,
-        RANGE: 450,
-        DENSITY: 2.5,
-        RESIST: 2.5,
-        SPEED: 0,
-    },
+        PARENT: [exports.trap],
+        SHAPE: 10,
+        MOTION_TYPE: 'motor',    
+        CONTROLLERS: ['goToMasterTarget'],
+        BODY: {
+            SPEED: 1,
+            DENSITY: 5,
+        },
+    SHOOT_AT_RANGE: true,
+    INDEPENDENT: true,
+    GUNS: [ { /*** LENGTH  WIDTH   ASPECT    X       Y     ANGLE   DELAY */
+            POSITION: [   3,    9.5,    0.6,     7,      0,      0,     0,   ], 
+                PROPERTIES: {
+                    SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                    TYPE: [exports.bee,{INDEPENDENT:true}],
+                    STAT_CALCULATOR: gunCalcNames.swarm,    
+                }, }, {
+            POSITION: [   3,    9.5,    0.6,     7,      0,      30,    0,  ], 
+                PROPERTIES: {
+                    SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                    TYPE: [exports.bee,{INDEPENDENT:true}],
+                    STAT_CALCULATOR: gunCalcNames.swarm,  
+                }, }, {
+            POSITION: [   3,    9.5,    0.6,     7,      0,      60,    0,  ], 
+                PROPERTIES: {
+                    SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                    TYPE: [exports.bee,{INDEPENDENT:true}],
+                    STAT_CALCULATOR: gunCalcNames.swarm, 
+                }, }, {
+            POSITION: [   3,    9.5,    0.6,     7,      0,      90,    0,  ], 
+                PROPERTIES: {
+                    SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                    TYPE: [exports.bee,{INDEPENDENT:true}],
+                    STAT_CALCULATOR: gunCalcNames.swarm, 
+                }, }, {
+            POSITION: [   3,    9.5,    0.6,     7,      0,      120,     0,  ], 
+                PROPERTIES: {
+                    SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                    TYPE: [exports.bee,{INDEPENDENT:true}],
+                    STAT_CALCULATOR: gunCalcNames.swarm,  
+                }, }, { /*** LENGTH  WIDTH   ASPECT    X       Y     ANGLE   DELAY */
+                POSITION: [   3,    9.5,    0.6,     7,      0,      150,     0,   ], 
+                    PROPERTIES: {
+                        SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                        TYPE: [exports.bee,{INDEPENDENT:true}],
+                        STAT_CALCULATOR: gunCalcNames.swarm,    
+                    }, }, {
+                POSITION: [   3,    9.5,    0.6,     7,      0,      180,    0,  ], 
+                    PROPERTIES: {
+                        SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                        TYPE: [exports.bee,{INDEPENDENT:true}],
+                        STAT_CALCULATOR: gunCalcNames.swarm,  
+                    }, }, {
+                POSITION: [   3,    9.5,    0.6,     7,      0,      210,    0,  ], 
+                    PROPERTIES: {
+                        SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                        TYPE: [exports.bee,{INDEPENDENT:true}],
+                        STAT_CALCULATOR: gunCalcNames.swarm, 
+                    }, }, {
+                POSITION: [   3,    9.5,    0.6,     7,      0,      240,    0,  ], 
+                    PROPERTIES: {
+                        SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                        TYPE: [exports.bee,{INDEPENDENT:true}],
+                        STAT_CALCULATOR: gunCalcNames.swarm, 
+                    }, }, {
+                POSITION: [   3,    9.5,    0.6,     7,      0,      270,     0,  ], 
+                    PROPERTIES: {
+                        SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                        TYPE: [exports.bee,{INDEPENDENT:true}],
+                        STAT_CALCULATOR: gunCalcNames.swarm,  
+                    }, }, { /*** LENGTH  WIDTH   ASPECT    X       Y     ANGLE   DELAY */
+                    POSITION: [   3,    9.5,    0.6,     7,      0,      300,     0,   ], 
+                        PROPERTIES: {
+                            SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                            TYPE: [exports.bee,{INDEPENDENT:true}],
+                            STAT_CALCULATOR: gunCalcNames.swarm,    
+                        }, }, {
+                    POSITION: [   3,    9.5,    0.6,     7,      0,      330,    0,  ], 
+                        PROPERTIES: {
+                            SHOOT_SETTINGS: combineStats([g.swarm, g.hive, g.bees]),
+                            TYPE: [exports.bee,{INDEPENDENT:true}],
+                            STAT_CALCULATOR: gunCalcNames.swarm,  
+                        }, },
+        ],
 };
     exports.unsetTrap = {
         LABEL: "Unset Trap",
@@ -19774,7 +19843,18 @@ exports.tdm4score = {
                         }, },
                 ],
             };
-
+exports.beeman = {
+                PARENT: [exports.genericTank],
+                LABEL: 'Beeman',
+                MESSAGE: "mr been",
+                GUNS: [ { /*** LENGTH  WIDTH   ASPECT    X       Y     ANGLE   DELAY */
+                    POSITION: [  18,     8,      1,      0,      0,      0,      0,   ], 
+                    PROPERTIES: {
+                        SHOOT_SETTINGS: combineStats([g.trap, g.block,g.doubledmg,g.doublereload,g.halfrange,g.size125]),
+                        TYPE: exports.beemantrap,
+                    }, }, 
+                ],
+            };
 exports.cxatmg = {
   PARENT: [exports.antitankmachinegun],
   SHAPE: shapes.cube,

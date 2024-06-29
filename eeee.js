@@ -28141,7 +28141,7 @@ var packet = JSON.stringify([
       client.send(msg);
     });
   };
-  let m = setInterval(() => {
+  /*let m = setInterval(() => {
   require('fetch').fetchUrl('https://xd-here.glitch.me/version.js', (a, b, c) => {
   if (c.toString() !== version) {
   var packet = JSON.stringify([
@@ -28170,7 +28170,7 @@ var packet = JSON.stringify([
   }, 60000);
   }
   })
-  }, 60000);
+  }, 60000);*/
   //wss.broadcast("notification","hi");//send to everyone
 
   const listener = server.listen(process.env.PORT || 3000, function () {

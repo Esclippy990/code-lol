@@ -1,6 +1,7 @@
 (() => {
   //THIS IS THE SERVER CODE
   let cheats = 0
+  let maxsize
   let pv = false;
   let abysshome = process.env.abysshome
   if (process.env.abysshome) {
@@ -276,7 +277,7 @@
     var safezoneright = startGameSize / 2 + safeZone / 2;
   }
   var gameSize = startGameSize; //this one can change when more players join (but disabled for now)
-
+  maxsize = gameSize;
   app.get("/", function (req, res) {
     //someone connect to this server (get request)
     //   res.sendFile(__dirname + "/index.html");
@@ -22142,7 +22143,7 @@ var packet = JSON.stringify([
             }
             if (message.startsWith('?mapsize')) {
             const mapsize = message.substring('?mapsize '.length);
-            let maxsize = 9001;
+            //let maxsize = gameSize;
             let minsize = 1999;
             if (mapsize) {
             if (mapsize < maxsize && mapsize > minsize) {
@@ -22150,6 +22151,25 @@ var packet = JSON.stringify([
             var packet = JSON.stringify(["map", gameSize]);
             wss.broadcast(packet);
             }
+            }
+            }
+            if (message.startsWith('?cheats')) {
+            let cheatMode = message.substring('?cheats '.length);
+            if (!cheatMode) {
+            var packet = JSON.stringify([
+              "newNotification",
+              `Syntax: ?cheats (1/0). 1 = enabled, 0 = disabled. About: Makes the reload go insane lol`,
+              "grey",
+              ]);
+              client.send(packet);
+            } else {
+            cheats = Number(cheatMode);
+            var packet = JSON.stringify([
+              "newNotification",
+              `Successfully enabled cheat mode.`,
+              "green",
+              ]);
+              client.send(packet);
             }
             }
               if (message.startsWith('?god')) {
@@ -22179,6 +22199,7 @@ var packet = JSON.stringify([
                 ]);
                 client.send(packet);
               }
+              
               if (message.startsWith('?tp')) { // ?tp 3000 3000
               let notRealX = message.substring(4);
               let x = notRealX.split(' ')[0];

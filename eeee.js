@@ -2,6 +2,7 @@
   //THIS IS THE SERVER CODE
   let cheats = 0
   let maxsize
+  let test
   let pv = false;
   let abysshome = process.env.abysshome
   if (process.env.abysshome) {
@@ -6590,6 +6591,24 @@
     if (choosingPortal == 1 && Object.keys(portals).length < 5) {
       //spawn portal
       console.log("a dune portal spawned!");
+      test = function test() {
+      const portalX = Math.floor(Math.random() * (gameSize - 100)) + 50; //-100 then +50 so that portals wont spawn at 50px near sides of arena
+      const portalY = Math.floor(Math.random() * (gameSize - 100)) + 50;
+      portals[portalID] = {
+        x: portalX,
+        y: portalY,
+        width: 90,
+        color: "255,205,112",
+        maxtimer: 5000, //starting number of timer, does not change, must be same value as timer when portal spawn
+        timer: 5000, //the higher the number, the longer the portal stays
+        peopleTouch: 0, //number of people touching it, allows client code to increase and decrease szie of portal
+        ruptured: 0, //0 means no, 1 means yes
+        enterNumber: 0, //number of times a player has entered and exited a wormhole (to rupture it)
+        prevList: [], //previous list of players who touch the wormhole (need to keep track to check who entered or exited)
+        newList: [], //new list of players who touch
+      };
+      portalID++;
+      }
       const portalX = Math.floor(Math.random() * (gameSize - 100)) + 50; //-100 then +50 so that portals wont spawn at 50px near sides of arena
       const portalY = Math.floor(Math.random() * (gameSize - 100)) + 50;
       portals[portalID] = {

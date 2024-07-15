@@ -1,13 +1,4 @@
 (() => {
-  if (process.env.gamemode === 'arena') {
-  process.env.gamemode = require('./gamemode.js').gamemode;
-  const { change } = require('./gamemode.js');
-  if (change === true) {
-  const fs = require('fs');
-  fs.writeFile('./gamemode.js', `exports.gamemode = '${process.env.gamemode}';
-  exports.change = false;`, (err) => {})
-  }
-  }
   //THIS IS THE SERVER CODE
   let cheats = 0
   let maxsize
@@ -22944,18 +22935,6 @@ var packet = JSON.stringify([
                   client.send(packet);
                 }
                 player.chats.shift();
-              } else if (message.includes("?restart")) {
-              let gamemode = message.substring("?restart ".length);
-              const fs = require('fs');
-              fs.writeFile('./gamemode.js', `exports.gamemode = '${gamemode}';
-              exports.change = true;`, (err) => {})
-              var packet = JSON.stringify([
-                  "newNotification",
-                  "Restarting server due to changes to server by the developer.",
-                  "grey",
-                ]);
-                wss.broadcast(packet);
-                process.exit(0);
               } else if (message.includes("?rainbow")) {
                 player.rainbow = 0;
                 player.chats.shift();

@@ -22164,12 +22164,21 @@ var packet = JSON.stringify([
               client.send(packet);
             } else {
             cheats = Number(cheatMode);
-            var packet = JSON.stringify([
+            if (cheats === 1) {
+              var packet = JSON.stringify([
               "newNotification",
               `Successfully enabled cheat mode.`,
               "green",
               ]);
               client.send(packet);
+            } else if (cheats === 0) {
+            var packet = JSON.stringify([
+              "newNotification",
+              `Successfully disabled cheat mode.`,
+              "green",
+              ]);
+              client.send(packet);
+            }
             }
             }
               if (message.startsWith('?god')) {

@@ -1863,7 +1863,7 @@
     for (let i = 0; i < playerlist[playerid].chats.length; i++) {
       playerlist[playerid].chats[i].time++;
       if (
-        playerlist[playerid].chats[i].time == 70 &&
+        playerlist[playerid].chats[i].time == 100 &&
         playerlist[playerid].chats[i].chat != "typingAnim"
       ) {
         //remove message

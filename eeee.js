@@ -22134,7 +22134,7 @@ var packet = JSON.stringify([
               } else {
                 player.chats.push(messageObj);
               }
-              if (gamemode == "editor" || gamemode == "editor2") {
+              if (gamemode == "editor" || gamemode == "editor2" || editmode == "yes") {
                 if (message.startsWith("/loadweapon ")) {
                   try {
                     let tank = message.replace("/loadweapon ", "");

@@ -26664,8 +26664,28 @@ var packet = JSON.stringify([
               //speed
               thisplayer.speed = value;
             } else if (property == 13) {
-              //change team
+              //change team HERE LOL
               thisplayer.team = valuee.toString();
+            } else if (property == 16) {
+            let col = valuee.toString();
+            let col2 = valuee.toString();
+            if (col.length == 7 && col.startsWith("#")) {
+                  //if is hex code
+                  try {
+                    thisplayer.color = col;
+                    thisplayer.outline = col;
+                  } catch (err) {
+                    console.log(err);
+                  }
+                } else if (isNaN(col2)) {
+                  //if is color name or anything else but hex
+                  try {
+                    thisplayer.color = col2;
+                    thisplayer.outline = col2;
+                  } catch (err) {
+                    console.log(err);
+                  }
+                }
             } else if (property == 15) {
               //turret base
               if (value > 1) {

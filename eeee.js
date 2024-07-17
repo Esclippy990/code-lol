@@ -26692,14 +26692,16 @@ var packet = JSON.stringify([
               thisplayer.speed = value;
             } else if (property == 13) {
               //change team
+              thisplayer.color = "#ffffff";
+              thisplayer.outline = "#ffffff";
               thisplayer.team = valuee.toString();
             } else if (property == 16) {
             if (valuee.toString() === "Reset") {
-            player.overridec = "no";
+            //player.overridec = "no";
             } else {
             let col = valuee.toString();
             let col2 = valuee.toString();
-            thisplayer.overridec = "yes";
+            //thisplayer.overridec = "yes";
             if (col.length == 7 && col.startsWith("#")) {
                   //if is hex code
                   try {

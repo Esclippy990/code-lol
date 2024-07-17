@@ -21603,6 +21603,7 @@
         playerUpgrade[Object.keys(tank)[i]] = tank[Object.keys(tank)[i]];
       }
     }
+    var packet = JSON.stringify(["editedTank", playerUpgrade]);
   } //end setplayerupgrade
 
   // we need to create our own http server so express and ws can share it.

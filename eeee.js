@@ -26695,11 +26695,11 @@ var packet = JSON.stringify([
               thisplayer.team = valuee.toString();
             } else if (property == 16) {
             if (valuee.toString() === "Reset") {
-            player.overridec = false;
+            player.overridec = "no";
             } else {
             let col = valuee.toString();
             let col2 = valuee.toString();
-            thisplayer.overridec = true;
+            thisplayer.overridec = "yes";
             if (col.length == 7 && col.startsWith("#")) {
                   //if is hex code
                   try {

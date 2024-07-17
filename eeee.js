@@ -26703,16 +26703,16 @@ var packet = JSON.stringify([
             if (col.length == 7 && col.startsWith("#")) {
                   //if is hex code
                   try {
-                    thisplayer.color = col;
-                    thisplayer.outline = col;
+                    thisplayer.color = "custom"+col;
+                    thisplayer.outline = "custom"+col;
                   } catch (err) {
                     console.log(err);
                   }
                 } else if (isNaN(col2)) {
                   //if is color name or anything else but hex
                   try {
-                    thisplayer.color = col2;
-                    thisplayer.outline = col2;
+                    thisplayer.color = "custom"+col2;
+                    thisplayer.outline = "custom"+col2;
                   } catch (err) {
                     console.log(err);
                   }

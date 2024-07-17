@@ -22185,7 +22185,7 @@ var packet = JSON.stringify([
             player.spawnProtection = 0
             var packet = JSON.stringify([
               "newNotification",
-              `Turned on spawn protection.\nNote: There is a timeout for the spawn protection! If you move/wait for too long, your spawn protection will automatically be turned off.`,
+              `Turned on spawn protection.`,
               "grey",
               ]);
               client.send(packet);

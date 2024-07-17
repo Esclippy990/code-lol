@@ -22166,34 +22166,9 @@ var packet = JSON.stringify([
             let minsize = 1999;
             if (mapsize) {
             if (mapsize < maxsize && mapsize > minsize) {
-            /*let m = setInterval(() => {
-            if (mapsize > gameSize) {
-            gameSize += 1
-            } else if (mapsize < gameSize) {
-            gameSize -= 1;
-            } else if (mapsize === gameSize) {
-            clearInterval(m)
-            }*/
             gameSize = mapsize;
             var packet = JSON.stringify(["map", gameSize]);
             wss.broadcast(packet);
-            }, 200);
-            } else if (mapsize > maxsize) {
-            mapsize = maxsize;
-            var packet = JSON.stringify([
-              "newNotification",
-              `Map size too big! Set map size to max size instead. (${maxsize})`,
-              "darkorange",
-              ]);
-              client.send(packet);
-            } else if (mapsize < minsize) {
-            mapsize = minsize;
-            var packet = JSON.stringify([
-            "newNotification",
-            `Map size too small! Set map size to minimum size instead. (${minsize})`,
-            "darkorange",
-            ]);
-            client.send(packet);
             }
             }
             }

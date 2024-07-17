@@ -392,7 +392,7 @@
         //check if world record (sent from other gamemodes to arena)
         if (gamemode == "arena") {
           if (chunk[1] == process.env.teleportingPassword) {
-            checkIfNewWorldRecord(chunk[2]);
+            checkIfNewWorldRecord(chunk[2], client);
           }
         }
       } else if (chunk[0] == "respawnXp") {
@@ -1815,7 +1815,7 @@
     }
   }
 
-  function checkIfNewWorldRecord(player) {
+  function checkIfNewWorldRecord(player, client) {
     if (gamemode == "arena") {
       //world record is stored in arena!!!
       for (let index in worldrecord) {
@@ -1840,7 +1840,7 @@
             "🎉 Congratulations! You are now on the world record leaderboard! 🎉",
             "orange",
           ]);
-          lookup[id].send(packet);
+          client.send(packet);
           break;
         }
       }
@@ -2019,7 +2019,7 @@
               console.log("Connectivity error");
             });
         }
-        checkIfNewWorldRecord(list[id]);
+        checkIfNewWorldRecord(list[id], client);
       }
       addHighScore(list[id], id);
     } else if (

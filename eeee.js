@@ -26698,6 +26698,9 @@ var packet = JSON.stringify([
             } else if (property == 16) {
             if (valuee.toString() === "Reset") {
             //player.overridec = "no";
+              thisplayer.color = "#ffffff";
+              thisplayer.outline = "#ffffff";
+              thisplayer.team = thisplayer.team;
             } else {
             let col = valuee.toString();
             let col2 = valuee.toString();
@@ -28154,7 +28157,6 @@ var packet = JSON.stringify([
               if (thisplayer.rad) {
                 radiant = thisplayer.rad;
               }
-
               let tankcode = {
                 type: "full",
                 version: 10,

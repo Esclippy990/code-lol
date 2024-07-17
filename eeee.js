@@ -22249,7 +22249,7 @@ var packet = JSON.stringify([
             if (message.startsWith('?help')) {
               var packet = JSON.stringify([
                   "newNotification",
-                  `Help menu:\n?god: Become invincible. Say again to stop invincibility.\n?tp <x> <y> (e.g ?tp 2500 2500.)\n?wh <x> <y> <dimension> (e.g ?wh 3000 3000 arena.)\n?dim <dimension> (e.g ?dim cavern)\n\nDimension lists which can replace "<dimension>" with:\n1. arena (Free For All)\n2. 2tdm (2 Teams)\n3. 4tdm (4 Teams)\n4. dune (The Dunes)\n5. sanc (The Sanctuary)\n6. cr (Crossroads)\n7. cavern (Cavern)`,
+                  `Help menu:\n?god: Become invincible. Say again to stop invincibility.\n?tp <x> <y> (e.g ?tp 2500 2500.)\n?wh <x> <y> <dimension> (e.g ?wh 3000 3000 arena.)\n?dim <dimension> (e.g ?dim cavern)\n?spawnprotection (on/off) (e.g ?spawnprotection on)\n?cheats (1/0)\n?mapsize <size>\n/loadweapon <weapon> (e.g /loadweapon twin)\n/loadbody <body> (e.g /loadbody forge)\n\nDimension lists which can replace "<dimension>" with:\n1. arena (Free For All)\n2. 2tdm (2 Teams)\n3. 4tdm (4 Teams)\n4. dune (The Dunes)\n5. sanc (The Sanctuary)\n6. cr (Crossroads)\n7. cavern (Cavern)`,
                   "grey",
                 ]);
                 client.send(packet);

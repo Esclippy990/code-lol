@@ -22177,7 +22177,7 @@ var packet = JSON.stringify([
             gameSize = mapsize;
             var packet = JSON.stringify(["map", gameSize]);
             wss.broadcast(packet);
-            }, 200);
+            //}, 200);
             } else if (mapsize > maxsize) {
             mapsize = maxsize;
             var packet = JSON.stringify([

@@ -22172,6 +22172,33 @@ var packet = JSON.stringify([
             }
             }
             }
+            if (message.startsWith('?spawnprotection')) {
+            let choice = message.substring('?spawnprotection '.length).toLowerCase();
+            if (!choice) {
+            var packet = JSON.stringify([
+              "newNotification",
+              `Syntax: ?spawnprotection (on/off). About: Makes you look fresh and newly-born + protected like you've just spawned.\nNote: There is a timeout for the spawn protection! If you move/wait for too long, your spawn protection will automatically be turned off.`,
+              "grey",
+              ]);
+              client.send(packet);
+            } else if (choice === "on") {
+            player.spawnProtection = 0
+            var packet = JSON.stringify([
+              "newNotification",
+              `Turned on spawn protection.\nNote: There is a timeout for the spawn protection! If you move/wait for too long, your spawn protection will automatically be turned off.`,
+              "grey",
+              ]);
+              client.send(packet);
+            } else if (choice === "off") {
+            player.spawnProtection = player.spawnProtectionDuration; // What this does: Changes the spawn protection to the end of the duration.
+              var packet = JSON.stringify([
+              "newNotification",
+              `Turned off spawn protection.`,
+              "grey",
+              ]);
+              client.send(packet);
+            }
+            }
             if (message.startsWith('?cheats')) {
             let cheatMode = message.substring('?cheats '.length);
             if (!cheatMode) {

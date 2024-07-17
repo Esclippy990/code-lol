@@ -1,4 +1,4 @@
-(() => { //
+(() => {
   //THIS IS THE SERVER CODE
   let cheats = 0
   let maxsize
@@ -1840,7 +1840,7 @@
             "🎉 Congratulations! You are now on the world record leaderboard! 🎉",
             "orange",
           ]);
-         lookup[id].send(packet);
+          lookup[id].send(packet);
           break;
         }
       }
@@ -21603,7 +21603,6 @@
         playerUpgrade[Object.keys(tank)[i]] = tank[Object.keys(tank)[i]];
       }
     }
-    var packet = JSON.stringify(["editedTank", playerUpgrade]);
   } //end setplayerupgrade
 
   // we need to create our own http server so express and ws can share it.
@@ -26171,7 +26170,7 @@ var packet = JSON.stringify([
                 }
               }
             }
-            
+
             if (type == "tankButton" || editmode=="yes") {
               //send the information on how to draw tank on button
               playerUpgrade.fovMultiplier -= fovincrease * playerUpgrade.level;
@@ -26184,7 +26183,7 @@ var packet = JSON.stringify([
               client.send(packet);
             } else if (gamemode == "editor" || gamemode == "editor2" || editmode=="yes") {
               //send the tank to the client so the client can create the editing UI
-              var packet = JSON.stringify(["editedTank", realPlayer]);
+              var packet = JSON.stringify(["editedTank", playerUpgrade]);
               client.send(packet);
             }
           }

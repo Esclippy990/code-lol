@@ -1,4 +1,4 @@
-(() => {
+(() => { //
   //THIS IS THE SERVER CODE
   let cheats = 0
   let maxsize

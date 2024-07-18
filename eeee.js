@@ -17155,6 +17155,32 @@
           tankTypeLevel: "45",
           fovMultiplier: 1,
         },
+        exploder: {
+        barrels: {
+    barrelOne: {
+      barrelWidth: 25,
+      barrelHeight: 30,
+      additionalAngle: 0,
+      x: 0,
+      barrelMoveIncrement: 0,
+      barrelType: 'bullet',
+      reloadRecover: 2,
+      bulletHealth: 23,
+      bulletDamage: 0.45,
+      bulletPenetration: 2.5,
+      bulletTimer: 36,
+      bulletSpeed: 26,
+      barrelHeightChange: 0,
+      shootingState: 'no',
+      reload: 0,
+      recoil: 0.3,
+      growth: 'yes'
+    }
+  },
+          tankType: "exploder",
+          tankTypeLevel: "60",
+          fovMultiplier: 1,
+        },
         hailstorm: {
           barrels: {
             barrelOne: {

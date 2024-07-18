@@ -282,6 +282,7 @@
   app.get("/", function (req, res) {
     //someone connect to this server (get request)
     //   res.sendFile(__dirname + "/index.html");
+    res.setHeader('Access-Control-Allow-Origin', '*')
     res.send("bruh why...");
   });
   app.post("/", function (req, res) {

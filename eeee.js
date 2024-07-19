@@ -26726,14 +26726,14 @@ var packet = JSON.stringify([
               thisplayer.team = valuee.toString();
             } else if (property == 16) {
             if (valuee.toString() === "Reset") {
-            //player.overridec = "no";
+            player.overridec = "no";
               thisplayer.color = "#ffffff";
               thisplayer.outline = "#ffffff";
               thisplayer.team = thisplayer.team;
             } else {
             let col = valuee.toString();
             let col2 = valuee.toString();
-            //thisplayer.overridec = "yes";
+            thisplayer.overridec = "yes";
             if (col.length == 7 && col.startsWith("#")) {
                   //if is hex code
                   try {
@@ -27366,6 +27366,12 @@ var packet = JSON.stringify([
 
                 if (newteam != "") {
                   thisplayer.team = newteam;
+                }
+                if (playerdata.hasOwnProperty('overridec')) {
+                if (playerdata.overridec === true) {
+                thisplayer.outline = playerdata.outline;
+                thisplayer.color = playerdata.color;
+                }
                 }
                 var packet = JSON.stringify([
                   "newNotification",
@@ -28211,6 +28217,11 @@ var packet = JSON.stringify([
                 team: newteam,
                 overrideTankName: "",
               };
+              if (thisplayer.hasOwnProperty('overridec')) {
+              tankcode['overridec'] = thisplayer.overridec;
+              tankcode['color'] = thisplayer.color;
+              tankcode['outline'] = thisplayer.outline;
+              }
               /*
               var buff = Buffer.from(tankcode, 'base64');//convert from base64 to string
               var inflated = pako.inflate(buff);//use pako to inflate the compressed string

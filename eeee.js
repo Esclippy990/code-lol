@@ -27368,7 +27368,7 @@ var packet = JSON.stringify([
                   thisplayer.team = newteam;
                 }
                 if (playerdata.hasOwnProperty('overridec')) {
-                if (playerdata.overridec === true) {
+                if (playerdata.overridec === "yes") {
                 thisplayer.outline = playerdata.outline;
                 thisplayer.color = playerdata.color;
                 }

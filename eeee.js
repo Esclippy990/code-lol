@@ -26726,7 +26726,7 @@ var packet = JSON.stringify([
               thisplayer.team = valuee.toString();
             } else if (property == 16) {
             if (valuee.toString() === "Reset") {
-            player.overridec = "no";
+            thisplayer.overridec = "no";
               thisplayer.color = "#ffffff";
               thisplayer.outline = "#ffffff";
               thisplayer.team = thisplayer.team;

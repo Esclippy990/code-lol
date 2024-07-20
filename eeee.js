@@ -4564,8 +4564,8 @@
           timer: barrel.bulletTimer,
           width: barrel.barrelWidth / 2,
           height: barrel.barrelWidth / 2,
-          color: `${playerlist[id].overridec == "yes" ? playerlist[id].color.replaceAll("custom", "") : playerlist[id].color}`, // CHECKPOINT
-          outline: `${playerlist[id].overridec == "yes" ? playerlist[id].outline.replaceAll("custom", "") : playerlist[id].outline}`,
+          color: playerlist[id].color,
+          outline: playerlist[id].outline,
           owner: playerlist[id],
           ownerId: id,
           team: playerlist[id].team,
@@ -4580,9 +4580,6 @@
           heal: "no",
           AI: "no",
         };
-        if (player.overridec == "yes") {
-          
-        }
         //not do the calculation for moving bullet so that it spawns at tip of barrel
         if (barrel.barrelType != "aura") {
           bulletlist[bulletID].x +=

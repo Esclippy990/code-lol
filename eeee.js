@@ -18,7 +18,6 @@
   let express = require("express");
   const http = require("http");
   //var uuid = require('uuid-random');//generates special uuid, but uuid is really long (36 characters)
-  const WebSocket = require("ws");
   const { serialize } = require("v8"); //used for calculating bytes
   let app = express();
 

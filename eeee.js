@@ -19,7 +19,6 @@
   const http = require("http");
   //var uuid = require('uuid-random');//generates special uuid, but uuid is really long (36 characters)
   const WebSocket = require("ws");
-  const plrcnt = new WebSocket("https://rock-it-playercount.glitch.me/");
   const { serialize } = require("v8"); //used for calculating bytes
   let app = express();
 
@@ -21634,6 +21633,7 @@
   } //end setplayerupgrade
 
   // we need to create our own http server so express and ws can share it.
+  const WebSocket = require("ws");
   const server = http.createServer(app);
   // pass the created server to ws
   const wss = new WebSocket.Server({ server });
@@ -21647,7 +21647,6 @@
     //Create Unique User ID for player
     client.id = UUID();
     console.log(req.headers['x-forwarded-for'].split(',')[0]); // Log that, it will be useful for ban system
-    plrcnt.send('+1');
     //console.log("User connected: ", client.id);
     lookup[client.id] = client; //allow the server to send stuff to specific client
 
@@ -28272,7 +28271,6 @@ var packet = JSON.stringify([
           console.log("removed someone's ip");
         }
         //console.log(clientIP);
-        plrcnt.send('-1');
       } else {
         console.log("MISSING IP IN LIST!!!!");
       }

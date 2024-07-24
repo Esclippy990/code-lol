@@ -1,5 +1,6 @@
 (() => {
   //THIS IS THE SERVER CODE
+  let playercount = 0;
   let cheats = 0
   let maxsize
   let test
@@ -720,7 +721,6 @@
   const sancportals = {}; //arena to sanctuary
   var portalID = 0;
   var leaderboard = {}; //store the leaderboard to check if it changed before sending to client
-
   var globalPlayerCount = 0; //global player count across all servers
   var prevplayercount = -1; //previous player count to track if player count changed, then send to main server to update global player count
   var timeSinceLastPlayerCount = 25; //time between sending new player count is 50 * 30 milliseconds. prevents botter from crashing server
@@ -26381,7 +26381,8 @@ var packet = JSON.stringify([
             //send info that will only be sent when changed
             var packet = JSON.stringify(["map", gameSize]);
             client.send(packet);
-            var packet = JSON.stringify(["pc", Object.keys(players).length]);
+            playercount++;
+            var packet = JSON.stringify(["pc", playercount]);
             client.send(packet);
             var packet = JSON.stringify(["gpc", globalPlayerCount]);
             client.send(packet);
@@ -26533,7 +26534,7 @@ var packet = JSON.stringify([
           //send info that will only be sent when change
           var packet = JSON.stringify(["map", gameSize]);
           client.send(packet);
-          var packet = JSON.stringify(["pc", Object.keys(players).length]);
+          var packet = JSON.stringify(["pc", playercount]);
           if (gamemode == "cr" || gamemode == "cavern") {
             packet = JSON.stringify(["pc", "???"]);
           }
@@ -28358,7 +28359,7 @@ var packet = JSON.stringify([
           timeSinceLastPlayerCount = 0;
           //broadcast new player count to everyone
           if (gamemode != "cr" && gamemode != "cavern") {
-            var packet = JSON.stringify(["pc", Object.keys(players).length]);
+            var packet = JSON.stringify(["pc", playercount]);
             wss.broadcast(packet);
           }
         }

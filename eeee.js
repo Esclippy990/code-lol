@@ -30,8 +30,8 @@
     return firstPart + secondPart;
   }
   //Important server stuff
-  var mainserverURL = "https://6wj9l6-3000.csb.app/"; //url link of the main server that controls teleporting, all dimensions connect to this server
-  var arenaserverURL = "https://m46qtv-3000.csb.app/"; //url link of arena, needed for world record cuz world record is stored in arena project
+  var mainserverURL = "https://rock-it-1.glitch.me/"; //url link of the main server that controls teleporting, all dimensions connect to this server
+  var arenaserverURL = "https://rock-it-1.glitch.me/"; //url link of arena, needed for world record cuz world record is stored in arena project
   var serverURLs = [
     "https://m46qtv-3000.csb.app/",
     "https://kfcl7q-3000.csb.app/",
